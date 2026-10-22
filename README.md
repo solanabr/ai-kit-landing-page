@@ -54,9 +54,11 @@ English at `/` and Brazilian Portuguese at `/br` (homepage). Catalog and detail 
 
 ## Deploying
 
-`vercel.json` serves `.md` as `text/markdown` and `llms*.txt` as `text/plain`. `SITE_URL` sets the absolute URLs in the twins, canonical links and hreflang (default `https://aikit.superteam.codes`).
+The site is served at `ai.superteam.codes`, which is the default `SITE_URL`. `SITE_URL` sets the absolute URLs in the twins, canonical links and hreflang. `vercel.json` serves `.md` as `text/markdown` and `llms*.txt` as `text/plain`.
 
-`aikit.superteam.codes` is currently the kit repository itself, deployed on Vercel: `/` and `/install.sh` redirect to the installer, and every other path serves a kit file, which the "no install" mode relies on (`/CLAUDE-solana.md`, `/.claude/...`, including the `ext/` packs). This site's `vercel.json` keeps the installer working on `/` for `curl` and `wget`, but it does **not** serve the kit's files. So before this site takes that domain, the kit's raw files need another home, or a rewrite to the kit's deployment. Until then, deploy it under a different host and set `SITE_URL` to match.
+`superteam.codes` is on Vercel's nameservers with a wildcard record. Adding the domain under the Vercel project's **Settings → Domains** is the whole setup; no DNS change is needed.
+
+`aikit.superteam.codes` stays with the kit repository's own Vercel project. It serves the installer (`curl -fsSL https://aikit.superteam.codes | bash`) and the kit's raw files, which no-install mode and plugin installs fetch. The site links to it, and nothing here changes it.
 
 ## Design
 

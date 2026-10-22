@@ -2,7 +2,7 @@
 // agents, commands and packs comes from src/data/kit.json (npm run sync).
 import kitData from '../data/kit.json';
 
-export const SITE = (import.meta.env.SITE as string | undefined)?.replace(/\/$/, '') || 'https://aikit.superteam.codes';
+export const SITE = (import.meta.env.SITE as string | undefined)?.replace(/\/$/, '') || 'https://ai.superteam.codes';
 export const REPO = 'https://github.com/solanabr/ai-kit';
 export const INSTALL_HOST = 'https://aikit.superteam.codes';
 
