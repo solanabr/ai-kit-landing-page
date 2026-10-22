@@ -1,0 +1,76 @@
+# Keeps src/data/kit.json in step with the kit's latest release tag.
+#
+# Daily, and on demand from the Actions tab. When the kit's content changed
+# (a new tag, or changed agents, commands or packs), it rebuilds the site and
+# commits the new snapshot to main, which Vercel deploys. A run where only the
+# GitHub star count moved commits nothing, so it does not cost a deploy.
+#
+# A red run means the build refused the new data: a hand-kept table in
+# src/lib/site.ts (TASKS, or TIERS after a firewall rule-set change) no longer
+# matches the kit. Fix the table, then run this again.
+#
+# The kit can also trigger it on release with a repository_dispatch of type
+# kit-release, which needs a token with access to this repo stored in the kit.
+name: Sync kit data
+
+on:
+  schedule:
+    - cron: '17 6 * * *'
+  workflow_dispatch:
+  repository_dispatch:
+    types: [kit-release]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-kit
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Read the kit at its latest tag
+        run: npm run sync
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Did the kit's content change?
+        id: diff
+        run: |
+          strip='del(.stars, .generatedAt)'
+          git show HEAD:src/data/kit.json | jq -S "$strip" > /tmp/old.json
+          jq -S "$strip" src/data/kit.json > /tmp/new.json
+          if cmp -s /tmp/old.json /tmp/new.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No change in the kit's content; nothing to deploy." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "version=$(jq -r .version src/data/kit.json)" >> "$GITHUB_OUTPUT"
+            echo "commit=$(jq -r '.kitCommit[0:7]' src/data/kit.json)" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build
+        if: steps.diff.outputs.changed == 'true'
+        run: npm run build
+
+      - name: Commit the new snapshot
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add src/data/kit.json
+          git commit -m "chore(data): sync the kit at v${{ steps.diff.outputs.version }} (${{ steps.diff.outputs.commit }})"
+          git push
+          echo "Synced the kit at v${{ steps.diff.outputs.version }}; Vercel deploys the push." >> "$GITHUB_STEP_SUMMARY"

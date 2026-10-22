@@ -27,11 +27,19 @@ npm run dev
 npm run build                    # also checks every page has its .md twin
 ```
 
-The sync uses `GITHUB_TOKEN`, or a logged-in `gh`, for the GitHub API. Re-run it after each kit release and commit the new `kit.json`.
+The sync uses `GITHUB_TOKEN`, or a logged-in `gh`, for the GitHub API.
+
+### Kept in sync automatically
+
+`.github/workflows/sync-kit.yml` runs the sync every day at 06:17 UTC, and on demand from the Actions tab (**Sync kit data → Run workflow**). When the kit's content changed, it builds the site and commits the new `kit.json` to `main`, and Vercel deploys that push. A day where only the GitHub star count moved commits nothing, so it costs no deploy; stars refresh with the next real update. A kit release reaches the site within a day.
+
+A red run means the build refused the new data, and the live site stays as it was. The usual cause is a hand-kept table below that no longer matches the kit. Fix it, then run the workflow again.
+
+The kit can trigger the workflow on release instead of waiting for the daily run: a `repository_dispatch` of type `kit-release`, sent from a workflow in the kit with a token that can reach this repo.
 
 Three tables in `src/lib/site.ts` are hand-maintained, because the kit has no machine-readable source for them:
 
-- `TIERS`: the firewall matrix on the homepage, transcribed from the kit's README "Firewall tiers" table and `docs/firewall.md`. Re-check it when the kit's `RULE_SET_VERSION` moves.
+- `TIERS`: the firewall matrix on the homepage, transcribed from the kit's README "Firewall tiers" table and `docs/firewall.md`. It records the kit's `RULE_SET_VERSION` it was checked against, and the build fails when the kit moves past it. Re-check the rows, then bump `TIERS.ruleSetVersion`.
 - `TASKS`: the "Start with your task" mappings. The build fails if one names an agent, command or pack the kit no longer ships.
 - `ECOSYSTEM`: display names for the maintainer chips.
 

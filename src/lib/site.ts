@@ -70,17 +70,20 @@ export const TASKS = [
   { id: 'hackathon', label: { en: 'Ship a hackathon project', br: 'Entregar um projeto de hackathon' }, agent: 'solana-architect', command: 'plan-feature', packs: ['colosseum', 'solana-dev'], prompt: { en: '/plan-feature hackathon MVP: idea check, program, demo app', br: '/plan-feature MVP de hackathon: validar a ideia, programa, app de demo' } }
 ];
 
-// Firewall tier behaviour at the kit version in kit.json. The kit has no
-// machine-readable tier matrix, so this is transcribed from its README
-// "Firewall tiers" table and docs/firewall.md's gate table; re-check both
-// when the kit's RULE_SET_VERSION moves.
+// Firewall tier behaviour. The kit has no machine-readable tier matrix, so
+// this is transcribed from its README "Firewall tiers" table and
+// docs/firewall.md's gate table, at the rule set named by ruleSetVersion.
+// The build fails when the kit's RULE_SET_VERSION moves past it (data.ts),
+// so a firewall change cannot publish a stale table: re-check both docs,
+// update the rows, then bump ruleSetVersion.
 export type Gate = 'open' | 'ask' | 'block';
 export const TIERS = {
+  ruleSetVersion: 6,
   cols: ['Off', 'Relaxed', 'Medium', 'High'],
   values: { open: { en: 'not gated', br: 'livre' }, ask: { en: 'asks', br: 'pergunta' }, block: { en: 'blocks', br: 'bloqueia' } } as Record<Gate, { en: string; br: string }>,
   rows: [
     { label: { en: 'Mainnet deploys and authority changes', br: 'Deploys na mainnet e troca de autoridade' }, v: ['ask', 'ask', 'ask', 'block'] as Gate[] },
-    { label: { en: 'Private key and wallet reads', br: 'Leitura de chaves privadas e carteiras' }, v: ['block', 'block', 'block', 'block'] as Gate[] },
+    { label: { en: 'Wallet keypair and credential reads', br: 'Leitura de keypairs da carteira e credenciais' }, v: ['block', 'block', 'block', 'block'] as Gate[] },
     { label: { en: 'Irreversible on-chain actions', br: 'Ações on-chain irreversíveis' }, v: ['block', 'block', 'block', 'block'] as Gate[] },
     { label: { en: 'Destructive shell commands', br: 'Comandos de shell destrutivos' }, v: ['block', 'block', 'block', 'block'] as Gate[] },
     { label: { en: 'Package publishing', br: 'Publicação de pacotes' }, v: ['open', 'ask', 'block', 'block'] as Gate[] },

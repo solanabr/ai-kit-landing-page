@@ -1,7 +1,7 @@
 // The one data layer every HTML page and every Markdown twin reads, so the two
 // cannot drift: a page and its .md are rendered from the same objects.
 import kit from '../data/kit.json';
-import { ECOSYSTEM, INSTALL_HOST, MCP_ROLES, REPO, SITE, TAGS, TASKS, type Kind, type Lang } from './site';
+import { ECOSYSTEM, INSTALL_HOST, MCP_ROLES, REPO, SITE, TAGS, TASKS, TIERS, type Kind, type Lang } from './site';
 
 export type Pack = (typeof kit.packs)[number];
 export type Agent = (typeof kit.agents)[number];
@@ -32,6 +32,9 @@ for (const t of TASKS) {
   if (!agent(t.agent)) throw new Error(`TASKS ${t.id}: no agent ${t.agent}`);
   if (!command(t.command)) throw new Error(`TASKS ${t.id}: no command ${t.command}`);
   for (const p of t.packs) if (!pack(p)) throw new Error(`TASKS ${t.id}: no pack ${p}`);
+}
+if (kit.ruleSetVersion !== TIERS.ruleSetVersion) {
+  throw new Error(`The kit's firewall rule set is v${kit.ruleSetVersion}, but the homepage tier table (TIERS in src/lib/site.ts) was transcribed for v${TIERS.ruleSetVersion}. Re-check it against the kit's README and docs/firewall.md, then bump TIERS.ruleSetVersion.`);
 }
 export const ecosystem = ECOSYSTEM.filter(e => packs.some(p => p.id === e.pack && p.maintainer === e.maintainer));
 export const mcpList = kit.mcp.map(id => MCP_ROLES[id] || { name: id, en: '', br: '' });

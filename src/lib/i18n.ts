@@ -50,7 +50,7 @@ export const HOME = {
     safeIntro: `The firewall decides what an agent may do without asking you. Change the tier with ${code('/firewall')}.`,
     action: 'Action', tierSrc: (v: string) => `As of kit v${v} · from the kit's firewall documentation`,
     pinned: ['Pinned and scanned.', 'Every skill pack is pinned to a commit and scanned before it ships, so a pack changes only when a kit release moves its pin.'],
-    keypair: ['Keypair protection.', `Reads of private keys, wallet vaults and credentials are blocked at every tier, Off included. The agent uses ${code('solana address')} for the public key and asks you to run anything that needs the secret.`],
+    keypair: ['Wallet protection.', `Reads of your wallet keypairs in ${code('~/.config/solana')}, SSH keys and credential stores are blocked at every tier, Off included. The agent uses ${code('solana address')} for the public key and asks you to run anything that needs the secret.`],
     ecoH: 'Skills from the ecosystem', ecoIntro: "Packs come from the protocols' own repositories.", allPacks: (n: number) => `All ${n} skill packs`,
     faqH: 'FAQ',
     faq: [
@@ -85,7 +85,7 @@ export const HOME = {
     safeIntro: `O firewall decide o que um agente pode fazer sem pedir sua permissão. Troque o nível com ${code('/firewall')}.`,
     action: 'Ação', tierSrc: (v: string) => `Na versão v${v} do kit · da documentação do firewall do kit`,
     pinned: ['Fixados e verificados.', 'Cada pacote de skills é fixado em um commit e verificado antes de ser publicado, então um pacote só muda quando uma release do kit move esse commit.'],
-    keypair: ['Proteção de keypairs.', `A leitura de chaves privadas, cofres de carteira e credenciais é bloqueada em todos os níveis, inclusive no Off. O agente usa ${code('solana address')} para a chave pública e pede que você execute o que precisar do segredo.`],
+    keypair: ['Proteção da carteira.', `A leitura dos keypairs da sua carteira em ${code('~/.config/solana')}, das chaves SSH e dos arquivos de credenciais é bloqueada em todos os níveis, inclusive no Off. O agente usa ${code('solana address')} para a chave pública e pede que você execute o que precisar do segredo.`],
     ecoH: 'Skills do ecossistema', ecoIntro: 'Os pacotes vêm dos repositórios dos próprios protocolos.', allPacks: (n: number) => `Todos os ${n} pacotes de skills`,
     faqH: 'FAQ',
     faq: [

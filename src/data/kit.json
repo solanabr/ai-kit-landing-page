@@ -2,6 +2,7 @@
   "generatedAt": "2026-10-22",
   "kitCommit": "6dcd31a475a77c952138e387d8fe4b9ed52262b6",
   "version": "2.4.0",
+  "ruleSetVersion": 6,
   "stars": 110,
   "mcp": [
     "helius",
