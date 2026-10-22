@@ -156,6 +156,8 @@ function lead(s) {
 const registry = JSON.parse(read('.claude/skills/skill-registry.json'));
 const pinned = registry.entries.filter(e => e.tier === 'core' || e.tier === 'extension');
 const version = read('.claude/VERSION').trim().split(/\s+/).pop();
+// The firewall rule-set version the site's hand-kept tier table is checked against.
+const ruleSetVersion = Number((read('.claude/bin/firewall.sh').match(/^RULE_SET_VERSION\s*=\s*(\d+)/m) || [])[1]) || null;
 
 // First commit date at which the registry carried this pack at its current pin.
 function pinnedAt(sha) {
@@ -283,7 +285,7 @@ const kitCommit = (() => { try { return sh('git', ['-C', kitDir, 'rev-parse', 'H
 
 writeFileSync(OUT, JSON.stringify({
   generatedAt: new Date().toISOString().slice(0, 10),
-  kitCommit, version, stars, mcp,
+  kitCommit, version, ruleSetVersion, stars, mcp,
   agents, commands, packs
 }, null, 2) + '\n');
 console.log(`wrote ${OUT}: ${agents.length} agents, ${commands.length} commands, ${packs.length} packs, stars ${stars}`);
