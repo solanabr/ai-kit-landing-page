@@ -1,0 +1,51 @@
+# Solana AI Kit
+
+> Claude Code, set up to ship on Solana. Open-source (MIT) agents, workflow commands and pinned skill packs from Superteam Brazil. Version 2.4.0.
+
+Every page below is plain Markdown. Full text of all pages: https://aikit.superteam.codes/llms-full.txt
+
+## Agents
+- [solana-architect](https://aikit.superteam.codes/agents/solana-architect.md): Designs accounts, PDAs and program boundaries before code is written.
+- [anchor-engineer](https://aikit.superteam.codes/agents/anchor-engineer.md): Writes, tests and upgrades Anchor programs.
+- [pinocchio-engineer](https://aikit.superteam.codes/agents/pinocchio-engineer.md): Builds compute-lean programs with Pinocchio.
+- [defi-engineer](https://aikit.superteam.codes/agents/defi-engineer.md): Integrates swaps, lending, perps and oracles.
+- [token-engineer](https://aikit.superteam.codes/agents/token-engineer.md): Creates and manages SPL and Token-2022 mints.
+- [solana-frontend-engineer](https://aikit.superteam.codes/agents/solana-frontend-engineer.md): Builds web dApps on @solana/kit with wallet connection.
+- [mobile-engineer](https://aikit.superteam.codes/agents/mobile-engineer.md): Builds Android dApps with Solana Mobile tooling.
+- [rust-backend-engineer](https://aikit.superteam.codes/agents/rust-backend-engineer.md): Writes indexers, services and RPC backends in Rust.
+- [devops-engineer](https://aikit.superteam.codes/agents/devops-engineer.md): Handles verifiable builds, deploys and program upgrades.
+- [solana-qa-engineer](https://aikit.superteam.codes/agents/solana-qa-engineer.md): Tests and reviews programs before they reach mainnet.
+- [tech-docs-writer](https://aikit.superteam.codes/agents/tech-docs-writer.md): Writes READMEs, integration guides and IDL docs.
+- [game-architect](https://aikit.superteam.codes/agents/game-architect.md): Designs on-chain game state and turn loops.
+- [unity-engineer](https://aikit.superteam.codes/agents/unity-engineer.md): Builds Unity clients that talk to Solana programs.
+- [solana-guide](https://aikit.superteam.codes/agents/solana-guide.md): Explains Solana concepts while you build.
+- [solana-researcher](https://aikit.superteam.codes/agents/solana-researcher.md): Researches protocols, docs and on-chain data.
+
+## Commands
+- [/plan-feature](https://aikit.superteam.codes/commands/plan-feature.md): Turns a feature request into a reviewed plan with accounts, instructions and tests.
+- [/build-program](https://aikit.superteam.codes/commands/build-program.md): Implements a planned program or instruction.
+- [/test-rust](https://aikit.superteam.codes/commands/test-rust.md): Runs and extends the Rust test suite.
+- [/audit-solana](https://aikit.superteam.codes/commands/audit-solana.md): Reviews a program for Solana-specific security issues and writes a report.
+- [/diff-review](https://aikit.superteam.codes/commands/diff-review.md): Reviews the current diff against the plan and conventions.
+- [/profile-cu](https://aikit.superteam.codes/commands/profile-cu.md): Measures compute units per instruction.
+- [/deploy](https://aikit.superteam.codes/commands/deploy.md): Builds verifiably and deploys to a cluster, behind the firewall.
+- [/debug-user-tx](https://aikit.superteam.codes/commands/debug-user-tx.md): Explains why a user's transaction failed.
+- [/inspect-mint](https://aikit.superteam.codes/commands/inspect-mint.md): Reads a mint's authorities, extensions and supply.
+- [/migrate-web3](https://aikit.superteam.codes/commands/migrate-web3.md): Migrates @solana/web3.js code to @solana/kit.
+- [/generate-idl-client](https://aikit.superteam.codes/commands/generate-idl-client.md): Generates a typed client from a program IDL.
+- [/firewall](https://aikit.superteam.codes/commands/firewall.md): Shows or changes the firewall tier.
+- [/doctor](https://aikit.superteam.codes/commands/doctor.md): Checks toolchain versions and kit configuration.
+
+## Skills
+- [Solana Dev Skill](https://aikit.superteam.codes/skills/solana-dev.md): Solana Foundation development skill: Anchor 1.x and Pinocchio programs, @solana/kit clients, LiteSVM, Mollusk and Surfpool testing, security, Token-2022, payments.
+- [Jupiter Agent Skills](https://aikit.superteam.codes/skills/jupiter.md): Jupiter's official skills: integrating-jupiter (swap, lend, perps, trigger, recurring), jupiter-lend, jupiter-swap-migration, jupiter-vrfd.
+- [Metaplex skills](https://aikit.superteam.codes/skills/metaplex.md): NFTs and digital assets on Metaplex Core and Token Metadata.
+- [MagicBlock skills](https://aikit.superteam.codes/skills/magicblock.md): Ephemeral rollups for real-time and game state.
+- [Helius skills](https://aikit.superteam.codes/skills/helius.md): RPC, webhooks and enhanced transaction data.
+- [Colosseum skills](https://aikit.superteam.codes/skills/colosseum.md): Hackathon idea validation and submission prep.
+- [Alchemy skills](https://aikit.superteam.codes/skills/alchemy.md): Solana RPC and data APIs on Alchemy.
+- [SendAI skills](https://aikit.superteam.codes/skills/sendai.md): Agent-driven Solana actions and integrations.
+- [Solana Mobile skills](https://aikit.superteam.codes/skills/solana-mobile.md): Mobile Wallet Adapter and Android dApp setup.
+- [Light Protocol skills](https://aikit.superteam.codes/skills/light-protocol.md): ZK compression for accounts and tokens.
+- [Circle skills](https://aikit.superteam.codes/skills/circle.md): USDC payments and transfers.
+- [Dune skills](https://aikit.superteam.codes/skills/dune.md): Querying Solana data on Dune.

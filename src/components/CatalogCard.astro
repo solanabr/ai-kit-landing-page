@@ -1,0 +1,55 @@
+---
+import Icon from './Icon.astro';
+import type { Card } from '../lib/data';
+import type { Kind } from '../lib/site';
+
+interface Props { item: Card; kind: Kind; view?: 'grid' | 'list' }
+const { item: it, kind, view = 'grid' } = Astro.props;
+const isSkill = kind === 'skills';
+const defText = isSkill ? (it.def ? ' · default' : ' · on demand') : '';
+// Search and filter attributes for the catalog's client-side filter.
+const data = {
+  'data-item': '',
+  'data-search': [it.title, it.id, it.desc, it.maintainer].join(' ').toLowerCase(),
+  'data-tags': it.tags.join('|'),
+  'data-def': it.def ? 'default' : 'demand'
+};
+---
+{view === 'grid' ? (
+  <article class="card" {...data}>
+    <div class="card-top">
+      <a href={it.href} class={'card-t' + (isSkill ? '' : ' tool')}>{it.title}</a>
+      {it.official && <span class="badge official"><Icon name="check" size={11} stroke={2} />Official</span>}
+      {it.model && <span class="badge model">{it.model}</span>}
+    </div>
+    <div class="card-m">{it.maintainer}{defText}</div>
+    <p class="card-d">{it.desc}</p>
+    {it.tags.length > 0 && <div class="card-tags">{it.tags.map(t => <span class="badge tag">{t}</span>)}</div>}
+    <div class="card-foot">
+      {isSkill && it.sha && <span class="badge sha" title="Pinned commit">@ {it.sha}</span>}
+      <button type="button" class="copy-field" data-copy data-copy-text={it.install} data-copy-label="⧉" data-copied-label="copied" aria-label={`Copy: ${it.install}`}>
+        <span class="txt">{it.install}</span>
+        <span class="st" aria-live="polite" data-copy-status>⧉</span>
+      </button>
+    </div>
+  </article>
+) : (
+  <div class="row" {...data}>
+    <div class="row-id">
+      <div>
+        <a href={it.href}>{isSkill ? it.id : it.title}</a>
+        {it.official && <span class="badge official sm">Official</span>}
+        {it.model && <span class="badge model sm">{it.model}</span>}
+      </div>
+      <span class="card-m">{it.maintainer}{defText}</span>
+    </div>
+    <p class="row-d">{it.desc}</p>
+    <div class="row-end">
+      {isSkill && it.sha && <span class="badge sha" title="Pinned commit">@ {it.sha}</span>}
+      <button type="button" class="btn btn-secondary btn-icon copy-btn" data-copy data-copy-text={it.install} aria-label={`Copy: ${it.install}`} title={it.install}>
+        <Icon name="copy" size={14} class="ico" />
+        <svg class="ok" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ink-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
+      </button>
+    </div>
+  </div>
+)}

@@ -1,0 +1,223 @@
+---
+// One template for a skill pack, an agent and a command. Field order follows
+// the handoff (and skills.sh): install, description, use-it-when, contents,
+// safety review, used by, related.
+import Base from '../layouts/Base.astro';
+import CatalogCard from './CatalogCard.astro';
+import FactSidebar, { type Fact } from './FactSidebar.astro';
+import Icon from './Icon.astro';
+import InstallBox, { type InstallTab } from './InstallBox.astro';
+import LangSwitch from './LangSwitch.astro';
+import MdControls from './MdControls.astro';
+import {
+  KIT, agent, command, editUrl, fileUrl, itemMarkdown, mdUrl, pack, packTags, pagePath, related, safetyParts, shortSha
+} from '../lib/data';
+import type { Kind } from '../lib/site';
+
+interface Props { kind: Kind; id: string }
+const { kind, id } = Astro.props;
+const isSkill = kind === 'skills';
+const md = itemMarkdown(kind, id);
+const twin = mdUrl(kind, id);
+const link = (k: Kind, x: string) => ({ label: k === 'commands' ? '/' + x : x, href: pagePath(k, x) });
+const noInstall: InstallTab = { label: 'No install', caption: 'Give this URL to any agent that can fetch.', prompt: true, lines: [twin] };
+const INSIDE_SHOWN = 24;
+
+let title = '', byline = '', description = '', model: string | null = null, official = false;
+let tags: { label: string; href: string }[] = [];
+let tabs: InstallTab[] = [];
+let triggers: string[] = [];
+let facts: Fact[] = [];
+let usedBy: { label: string; items: { label: string; href: string }[] }[] = [];
+let does: string[] = [];
+let handsOff: { to: string; when: string }[] = [];
+let file = '';
+let p: ReturnType<typeof pack>;
+
+if (isSkill) {
+  p = pack(id)!;
+  title = p.name;
+  byline = p.maintainer ? `by ${p.maintainer}` : '';
+  description = p.description;
+  official = p.official;
+  tags = packTags(p).map(t => ({ label: t, href: `/skills?tags=${encodeURIComponent(t)}` }));
+  triggers = p.triggers;
+  tabs = [{ label: 'Installed kit', lines: [p.install] }, noInstall];
+  usedBy = [
+    { label: 'Agents', items: p.usedBy.agents.map(a => link('agents', a)) },
+    { label: 'Commands', items: p.usedBy.commands.map(c => link('commands', c)) }
+  ].filter(g => g.items.length);
+  facts = [
+    { k: 'Source repo', v: p.source ? p.source.replace('https://github.com/', '') : null, href: p.source || undefined, ph: 'source' },
+    { k: 'Pinned commit', v: p.commit, copy: p.commit || undefined, ph: 'commit' },
+    { k: 'Licence', v: p.license, ph: 'license' },
+    { k: 'Upstream stars', v: p.stars != null ? new Intl.NumberFormat('en').format(p.stars) : null, ph: 'signal.stars' },
+    { k: 'Upstream last commit', v: p.lastCommit, ph: 'signal.last_commit' },
+    { k: 'Pinned by the kit', v: p.pinnedAt, ph: 'pinned_at' },
+    { k: 'Tier', v: `${p.tier} · ${p.defaultInstalled ? 'installed by default' : 'add on demand'}` }
+  ];
+  file = '.claude/skills/skill-registry.json';
+} else if (kind === 'agents') {
+  const a = agent(id)!;
+  title = a.id; byline = 'solanabr/ai-kit · agent'; description = a.description; model = a.model; file = a.file;
+  tabs = [{ label: 'Claude Code', caption: 'Ask for the agent by name, or let a command route to it.', prompt: true, lines: [`Use the ${a.id} agent to …`] }, noInstall];
+  does = a.does; handsOff = a.handoffs;
+  usedBy = [
+    { label: 'Skills', items: a.skills.map(s => link('skills', s)) },
+    { label: 'Commands', items: a.commands.map(c => link('commands', c)) }
+  ].filter(g => g.items.length);
+  facts = [
+    { k: 'Model', v: a.model }, { k: 'File', v: a.file, href: fileUrl(a.file) },
+    { k: 'Licence', v: 'MIT' }, { k: 'Kit version', v: KIT.version }
+  ];
+} else {
+  const c = command(id)!;
+  title = '/' + c.id; byline = 'solanabr/ai-kit · command'; description = c.description; model = c.model; file = c.file;
+  tabs = [{ label: 'Claude Code', caption: 'Type it in your session.', prompt: true, lines: ['/' + c.id] }, noInstall];
+  does = c.does; handsOff = c.agents.map(to => ({ to, when: '' }));
+  usedBy = [
+    { label: 'Skills', items: c.skills.map(s => link('skills', s)) },
+    { label: 'Commands', items: c.commands.map(x => link('commands', x)) }
+  ].filter(g => g.items.length);
+  facts = [
+    { k: 'Model', v: c.model }, { k: 'File', v: c.file, href: fileUrl(c.file) },
+    { k: 'Licence', v: 'MIT' }, { k: 'Kit version', v: KIT.version }
+  ];
+}
+const safety = isSkill ? safetyParts(p!.safety) : null;
+const rel = related(kind, id);
+const usedTitle = isSkill ? 'Used by' : 'Uses';
+const relTitle = isSkill ? 'Related packs' : kind === 'agents' ? 'Related agents' : 'Related commands';
+const metaDesc = description.length > 160 ? description.slice(0, 157).replace(/\s+\S*$/, '') + '…' : description;
+---
+<Base title={`${title} · Solana AI Kit`} description={metaDesc} active={kind} md={`${pagePath(kind, id)}.md`}>
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="/">aikit</a></li><li aria-hidden="true">/</li>
+      <li><a href={`/${kind}`}>{kind}</a></li><li aria-hidden="true">/</li>
+      <li aria-current="page">{id}</li>
+    </ol>
+  </nav>
+
+  <header class="d-head">
+    <h1 class={'d-title' + (isSkill ? '' : ' tool')}>{title}</h1>
+    <div class="d-meta">
+      {byline && <span class="byline">{byline}</span>}
+      {official && <span class="badge official"><Icon name="check" size={11} stroke={2} />Official</span>}
+      {model && <span class="badge model" title="Model it runs on">model: {model}</span>}
+      {tags.map(t => <a class="badge tag" href={t.href}>{t.label}</a>)}
+    </div>
+  </header>
+
+  <div class="d-grid">
+    <div class="d-main">
+      <section class="d-install" aria-labelledby="install-h">
+        <h2 id="install-h" class="label-caps">{isSkill ? 'Install' : 'How to invoke'}</h2>
+        <InstallBox id="detail-install" tabs={tabs} ariaLabel={isSkill ? 'Install' : 'How to invoke'} />
+        <MdControls mdUrl={twin} viewHref={`${pagePath(kind, id)}.md`} md={md} />
+      </section>
+
+      <div class="d-side-narrow"><FactSidebar facts={facts} /></div>
+
+      <section aria-labelledby="about-h">
+        <h2 id="about-h" class="sr-only">About</h2>
+        <p class="d-desc">{description}</p>
+      </section>
+
+      {triggers.length > 0 && (
+        <section aria-labelledby="when-h">
+          <h2 id="when-h" class="h3">Use it when…</h2>
+          <ul class="when">{triggers.map(t => <li><span class="marker" aria-hidden="true">[*]</span>{t}</li>)}</ul>
+        </section>
+      )}
+
+      {isSkill && (
+        <section aria-labelledby="inside-h">
+          <h2 id="inside-h" class="h3">What's inside <span class="count">{p!.inside.length || ''}</span></h2>
+          {p!.inside.length > 0 ? (
+            <div class="rows-b">
+              {p!.inside.slice(0, INSIDE_SHOWN).map(s => (
+                <details class="skill-row">
+                  <summary><span>{s.id}</span><span class="plus plus-t" aria-hidden="true"></span></summary>
+                  <div class="skill-body">{s.description && <p>{s.description}</p>}<code>{s.path}</code></div>
+                </details>
+              ))}
+              {p!.inside.length > INSIDE_SHOWN && (
+                <details class="more">
+                  <summary>Show all {p!.inside.length}</summary>
+                  {p!.inside.slice(INSIDE_SHOWN).map(s => (
+                    <details class="skill-row">
+                      <summary><span>{s.id}</span><span class="plus plus-t" aria-hidden="true"></span></summary>
+                      <div class="skill-body">{s.description && <p>{s.description}</p>}<code>{s.path}</code></div>
+                    </details>
+                  ))}
+                </details>
+              )}
+            </div>
+          ) : (
+            <p class="used-none">⟨skills⟩ could not be read from the pack at its pinned commit.</p>
+          )}
+        </section>
+      )}
+
+      {!isSkill && does.length > 0 && (
+        <section aria-labelledby="does-h">
+          <h2 id="does-h" class="h3">What it does</h2>
+          <ol class="does">{does.map((t, i) => <li><span>{String(i + 1).padStart(2, '0')}</span>{t}</li>)}</ol>
+        </section>
+      )}
+
+      {!isSkill && handsOff.length > 0 && (
+        <section aria-labelledby="hand-h">
+          <h2 id="hand-h" class="h3">Hands off to…</h2>
+          <ul class="hand">
+            {handsOff.map(h => <li><a class="chip-link" href={pagePath('agents', h.to)} title={h.when || undefined}><span aria-hidden="true">→</span>{h.to}</a></li>)}
+          </ul>
+        </section>
+      )}
+
+      {isSkill && (
+        <section aria-labelledby="safety-h">
+          <h2 id="safety-h" class="h3 flex">Safety review {p!.commit && <span class="safety-at">@ {shortSha(p!.commit)}</span>}</h2>
+          <div class="safety">
+            <div class="safety-sum">
+              <Icon name="shieldCheck" size={18} />
+              <p>{safety ? safety.summary : '⟨safety⟩ No review is recorded in the registry for this commit.'}</p>
+            </div>
+            {safety && safety.full.length > 0 && (
+              <details>
+                <summary>Read the full review <span class="plus-t" aria-hidden="true"></span></summary>
+                <div class="safety-full">{safety.full.map(x => <p>{x}</p>)}</div>
+              </details>
+            )}
+          </div>
+        </section>
+      )}
+
+      <section aria-labelledby="used-h">
+        <h2 id="used-h" class="h3">{usedTitle}</h2>
+        {usedBy.length > 0 ? (
+          <dl class="used">
+            {usedBy.map(g => <div><dt>{g.label}</dt><dd>{g.items.map(x => <a href={x.href}>{x.label}</a>)}</dd></div>)}
+          </dl>
+        ) : (
+          <p class="used-none">{isSkill ? 'No kit agent or command links to this pack directly; the skill hub routes to it by task.' : 'It links to no skill pack or command directly.'}</p>
+        )}
+      </section>
+
+      {rel.length > 0 && (
+        <section aria-labelledby="rel-h">
+          <h2 id="rel-h" class="h3">{relTitle}</h2>
+          <div class="grid rel">{rel.map(r => <CatalogCard item={r} kind={kind} />)}</div>
+        </section>
+      )}
+
+      <div class="d-foot">
+        <a href={editUrl(file)}><Icon name="pencil" size={14} />Edit this page on GitHub</a>
+        <LangSwitch up />
+      </div>
+    </div>
+
+    <div class="d-side"><FactSidebar facts={facts} /></div>
+  </div>
+</Base>

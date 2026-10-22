@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="icon" type="image/svg+xml" href="logo.svg">
+<title>Components and tokens · Solana AI Kit</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="_ds/classical-b0c6d1fc-992f-48a2-a6e8-c8b1280345f0/styles.css">
+<script src="_ds/classical-b0c6d1fc-992f-48a2-a6e8-c8b1280345f0/_ds_bundle.js"></script>
+<style>
+@font-face{font-family:"VT323";src:url("fonts/vt323-latin-400-normal.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap;size-adjust:125%;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"VT323";src:url("fonts/vt323-latin-ext-400-normal.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap;size-adjust:125%;unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"VT323";src:url("fonts/vt323-vietnamese-400-normal.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap;size-adjust:125%;unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB}
+:root,[data-theme="dark"]{--font-heading:"VT323","IBM Plex Mono",ui-monospace,monospace;--font-heading-weight:400;--font-body:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;--mono:"VT323","IBM Plex Mono",ui-monospace,monospace;--color-bg:#0a0d0b;--color-surface:#111613;--color-text:#e2ede6;--color-accent:#14f195;--color-divider:color-mix(in srgb,#e2ede6 14%,transparent);--line-strong:color-mix(in srgb,#e2ede6 40%,transparent);--muted:#9daea4;--ink-accent:#14f195;--shadow-sm:0 0 0 1px rgba(0,0,0,.4);--shadow-md:0 8px 24px rgba(0,0,0,.5);--shadow-lg:0 16px 40px rgba(0,0,0,.6);color-scheme:dark}
+[data-theme="light"]{--color-bg:#f2f4f2;--color-surface:#e7ebe8;--color-text:#111814;--color-accent:#0a8f58;--color-divider:color-mix(in srgb,#111814 16%,transparent);--line-strong:color-mix(in srgb,#111814 52%,transparent);--muted:#4c5751;--ink-accent:#08683f;--shadow-sm:0 1px 2px color-mix(in srgb,#111814 14%,transparent);--shadow-md:0 3px 10px color-mix(in srgb,#111814 16%,transparent);--shadow-lg:0 12px 32px color-mix(in srgb,#111814 22%,transparent);color-scheme:light}
+body{margin:0;background:var(--color-bg);color:var(--color-text);font-family:var(--font-body);-webkit-font-smoothing:antialiased}
+a{color:var(--ink-accent)}a:hover{color:var(--color-text)}
+summary{list-style:none}summary::-webkit-details-marker{display:none}
+</style>
+</helmet>
+<div data-screen-label="Components and tokens" style="min-height:100vh;background:var(--color-bg);color:var(--color-text)">
+  <dc-import name="Nav" lang="en" active="docs" stars="{{ stars }}" hint-size="100%,62px"></dc-import>
+  <main style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,56px) 80px">
+    <header style="padding:clamp(24px,4vw,40px) 0 24px;display:flex;flex-direction:column;gap:12px;max-width:760px">
+      <p style="font-family:var(--mono);font-size:12px;color:var(--muted);margin:0">spec · Classical structure, terminal skin</p>
+      <h1 style="font-family:var(--font-heading);font-weight:400;font-size:clamp(36px,4.6vw,56px);line-height:1;letter-spacing:0;margin:0">Components and tokens</h1>
+      <p style="margin:0;font-size:15px;line-height:1.6;color:var(--muted);text-wrap:pretty">Classical's hairlines, outlined controls and single accent, set in VT323 for display and interface text and IBM Plex Mono for reading text. Dark is the default theme; both themes swap the same variables. Contrast ratios below are computed from the token values.</p>
+    </header>
+
+    <section aria-labelledby="color-h" style="padding:22px 0;border-top:1px solid var(--color-divider)">
+      <h2 id="color-h" style="font-family:var(--font-heading);font-weight:400;font-size:32px;margin:0 0 20px">Color</h2>
+      <div style="overflow-x:auto">
+        <table class="table" style="font-size:14px;min-width:760px">
+          <thead><tr><th scope="col" style="font-family:var(--mono)">Token</th><th scope="col" style="font-family:var(--mono)">Dark (default)</th><th scope="col" style="font-family:var(--mono)">Light</th><th scope="col" style="font-family:var(--mono)">Role</th></tr></thead>
+          <tbody>
+            <sc-for list="{{ colors }}" as="c" hint-placeholder-count="8">
+              <tr>
+                <td style="font-family:var(--mono);font-size:13px;white-space:nowrap">{{ c.name }}</td>
+                <td><div style="display:flex;gap:10px;align-items:center"><span style="width:28px;height:28px;flex:none;border-radius:var(--radius-sm);border:1px solid var(--line-strong);background:{{ c.dark }}"></span><span style="font-family:var(--mono);font-size:12px;line-height:1.4">{{ c.dark }}<br><span style="color:var(--muted)">{{ c.darkRatio }}</span></span></div></td>
+                <td><div style="display:flex;gap:10px;align-items:center"><span style="width:28px;height:28px;flex:none;border-radius:var(--radius-sm);border:1px solid var(--line-strong);background:{{ c.light }}"></span><span style="font-family:var(--mono);font-size:12px;line-height:1.4">{{ c.light }}<br><span style="color:var(--muted)">{{ c.lightRatio }}</span></span></div></td>
+                <td style="color:var(--muted);font-size:14px">{{ c.role }}</td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section aria-labelledby="type-h" style="padding:22px 0;border-top:1px solid var(--color-divider);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:28px">
+      <h2 id="type-h" style="grid-column:1/-1;font-family:var(--font-heading);font-weight:400;font-size:32px;margin:0">Type</h2>
+      <div style="display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--line-strong);padding-top:16px">
+        <span style="font-family:var(--mono);font-size:12px;color:var(--muted)">--font-heading · VT323 400 (size-adjust 125%)</span>
+        <span style="font-family:var(--font-heading);font-weight:400;font-size:56px;line-height:1">Ship on Solana.</span>
+        <span style="font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.7">H1 clamp(38px, 5.4vw, 68px) · H2 clamp(28px, 3.2vw, 38px) · H3 28px · list titles 22px · figures 60px · one weight only, no faux bold</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--line-strong);padding-top:16px">
+        <span style="font-family:var(--mono);font-size:12px;color:var(--muted)">--font-body · IBM Plex Mono 400 / 500 / 600</span>
+        <span style="font-size:17px;line-height:1.6">Each pack is pinned to a commit and scanned before it ships.</span>
+        <span style="font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.7">lede clamp(15px, 1.4vw, 17px) · body 14–15px / 1.55 · measure ≤ 64ch</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--line-strong);padding-top:16px">
+        <span style="font-family:var(--mono);font-size:12px;color:var(--muted)">--mono · VT323 400, Plex Mono fallback for missing glyphs</span>
+        <code style="font-family:var(--mono);font-size:14px;line-height:1.6">$ bash .claude/bin/skills.sh add jupiter</code>
+        <span style="font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.7">commands, paths, nav, labels, badges, [*] markers · 11–14px set (14–18px rendered) · Latin, Latin Extended and Vietnamese subsets</span>
+      </div>
+    </section>
+
+    <section aria-labelledby="space-h" style="padding:22px 0;border-top:1px solid var(--color-divider);display:flex;flex-wrap:wrap;gap:16px 48px">
+      <h2 id="space-h" style="flex:1 1 220px;font-family:var(--font-heading);font-weight:400;font-size:32px;margin:0">Spacing and shape</h2>
+      <div style="flex:3 1 560px;display:flex;flex-direction:column">
+        <sc-for list="{{ spacing }}" as="s" hint-placeholder-count="10">
+          <div style="display:grid;grid-template-columns:minmax(110px,210px) minmax(0,1fr);gap:16px;align-items:center;padding:10px 0;border-top:1px solid var(--color-divider)">
+            <span style="font-family:var(--mono);font-size:12px">{{ s.name }}</span>
+            <div style="display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;min-width:0"><span style="flex:0 1 auto;height:10px;width:{{ s.bar }};max-width:100%;border:1px solid var(--color-accent);border-radius:1px"></span><span style="font-family:var(--mono);font-size:12px;color:var(--muted);overflow-wrap:anywhere">{{ s.value }}</span></div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section aria-labelledby="comp-h" style="padding:32px 0 0;border-top:1px solid var(--color-divider)">
+      <h2 id="comp-h" style="font-family:var(--font-heading);font-weight:400;font-size:32px;margin:0 0 8px">Components</h2>
+      <p style="margin:0 0 8px;font-size:15px;color:var(--muted)">Each shown in the dark and light theme. All are live: tabs switch, copy buttons copy.</p>
+    </section>
+
+    <section aria-label="Badges and tag chips" style="padding:18px 0;border-top:1px solid var(--color-divider)">
+      <h3 style="font-family:var(--mono);font-weight:500;font-size:14px;letter-spacing:0;margin:0 0 4px">Badge · Tag chip</h3>
+      <p style="margin:0 0 16px;font-size:14px;color:var(--muted)">Badges are mono, 11px, stroked. Dashed means sample or placeholder data. Chips toggle with aria-pressed.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:16px">
+        <sc-for list="{{ themes }}" as="th" hint-placeholder-count="2">
+          <div data-theme="{{ th }}" style="background:var(--color-bg);color:var(--color-text);border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:24px;display:flex;flex-direction:column;gap:18px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--muted)">{{ th }}</span>
+            <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+              <span style="display:inline-flex;align-items:center;gap:4px;font-family:var(--mono);font-size:11px;line-height:1;padding:4px 7px;border:1px solid var(--color-accent);color:var(--ink-accent);border-radius:var(--radius-sm)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Official</span>
+              <span style="font-family:var(--mono);font-size:11px;line-height:1;padding:5px 6px;border:1px solid var(--color-divider);border-radius:var(--radius-sm)">@ a2211e3</span>
+              <span style="font-family:var(--mono);font-size:11px;line-height:1;padding:4px 7px;border:1px solid var(--line-strong);border-radius:var(--radius-sm)">model: opus</span>
+              <span style="font-family:var(--mono);font-size:10px;line-height:1;padding:3px 5px;border:1px dashed var(--line-strong);color:var(--muted);border-radius:var(--radius-sm)">sample</span>
+              <span style="font-family:var(--mono);font-size:12px;color:var(--muted);border:1px dashed var(--line-strong);border-radius:var(--radius-sm);padding:2px 6px">★ ⟨stars⟩</span>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <button type="button" aria-pressed="false" style="font-family:var(--mono);font-size:12px;line-height:1;padding:9px 11px;border-radius:var(--radius-sm);border:1px solid var(--color-divider);background:transparent;color:var(--color-text);cursor:pointer">DeFi</button>
+              <button type="button" aria-pressed="true" style="font-family:var(--mono);font-size:12px;line-height:1;padding:9px 11px;border-radius:var(--radius-sm);border:1px solid var(--color-accent);background:color-mix(in srgb,var(--color-accent) 14%,transparent);color:var(--ink-accent);cursor:pointer">security</button>
+              <span style="font-family:var(--mono);font-size:11px;line-height:1;padding:4px 7px;border:1px solid var(--color-divider);border-radius:var(--radius-sm);color:var(--muted);align-self:center">testing</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section aria-label="Install box and Markdown controls" style="padding:18px 0;border-top:1px solid var(--color-divider)">
+      <h3 style="font-family:var(--mono);font-weight:500;font-size:14px;letter-spacing:0;margin:0 0 4px">Install box · Markdown controls</h3>
+      <p style="margin:0 0 16px;font-size:14px;color:var(--muted)">Tabs are a tablist; the prompt glyph is not copied. Copy shows "Copied" for 1.8s, announced via aria-live.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:16px">
+        <sc-for list="{{ themes }}" as="th" hint-placeholder-count="2">
+          <div data-theme="{{ th }}" style="background:var(--color-bg);color:var(--color-text);border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:24px;display:flex;flex-direction:column;gap:18px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--muted)">{{ th }}</span>
+            <dc-import name="InstallBox" tabs="{{ installTabs }}" note="Run it from your project's root." lang="en" hint-size="100%,176px"></dc-import>
+            <dc-import name="MdControls" md-url="https://aikit.superteam.codes/skills/jupiter.md" view-href="Markdown Twins.dc.html#skills-jupiter" md="{{ md }}" lang="en" hint-size="100%,40px"></dc-import>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section aria-label="Catalog card and language switcher" style="padding:18px 0;border-top:1px solid var(--color-divider)">
+      <h3 style="font-family:var(--mono);font-weight:500;font-size:14px;letter-spacing:0;margin:0 0 4px">Catalog card (grid and list) · Language switcher</h3>
+      <p style="margin:0 0 16px;font-size:14px;color:var(--muted)">The switcher is a native disclosure; planned locales are listed but not linked until they ship.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:16px">
+        <sc-for list="{{ themes }}" as="th" hint-placeholder-count="2">
+          <div data-theme="{{ th }}" style="background:var(--color-bg);color:var(--color-text);border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:24px;display:flex;flex-direction:column;gap:18px">
+            <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:var(--mono);font-size:11px;color:var(--muted)">{{ th }}</span><dc-import name="LangSwitch" lang="en" variant="menu" hint-size="78px,33px"></dc-import></div>
+            <div style="max-width:360px"><dc-import name="CatalogCard" item="{{ card }}" kind="skills" view="grid" hint-size="100%,250px"></dc-import></div>
+            <div style="border-top:1px solid var(--color-divider)"><dc-import name="CatalogCard" item="{{ card }}" kind="skills" view="list" hint-size="100%,72px"></dc-import></div>
+            <dc-import name="LangSwitch" lang="en" variant="list" hint-size="100%,48px"></dc-import>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section aria-label="Fact sidebar" style="padding:18px 0;border-top:1px solid var(--color-divider)">
+      <h3 style="font-family:var(--mono);font-weight:500;font-size:14px;letter-spacing:0;margin:0 0 4px">Fact sidebar</h3>
+      <p style="margin:0 0 16px;font-size:14px;color:var(--muted)">A definition list. Missing registry values render as dashed ⟨field⟩ placeholders, never as invented numbers.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:16px">
+        <sc-for list="{{ themes }}" as="th" hint-placeholder-count="2">
+          <div data-theme="{{ th }}" style="background:var(--color-bg);color:var(--color-text);border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:24px;display:flex;flex-direction:column;gap:14px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--muted)">{{ th }}</span>
+            <div style="max-width:320px"><dc-import name="FactSidebar" lang="en" hint-size="100%,460px"></dc-import></div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section aria-label="Transcript block" style="padding:18px 0;border-top:1px solid var(--color-divider)">
+      <h3 style="font-family:var(--mono);font-weight:500;font-size:14px;letter-spacing:0;margin:0 0 4px">Transcript block</h3>
+      <p style="margin:0 0 16px;font-size:14px;color:var(--muted)">All lines are in the HTML from the start; the typing effect only reveals them, and is skipped under prefers-reduced-motion.</p>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <sc-for list="{{ themes }}" as="th" hint-placeholder-count="2">
+          <div data-theme="{{ th }}" style="background:var(--color-bg);color:var(--color-text);border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:24px;display:flex;flex-direction:column;gap:14px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--muted)">{{ th }}</span>
+            <dc-import name="Transcript" lang="en" autoplay="{{ false }}" hint-size="100%,560px"></dc-import>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+  </main>
+  <dc-import name="Footer" lang="en" version="2.4.0" hint-size="100%,380px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const TOK = [
+  ['--color-bg', '#0a0d0b', '#f2f4f2', 'Page ground', null],
+  ['--color-surface', '#111613', '#e7ebe8', 'Install box, transcript, menus', null],
+  ['--color-text', '#e2ede6', '#111814', 'Body and headings', 'text'],
+  ['--muted', '#9daea4', '#4c5751', 'Secondary text, captions, mono labels', 'text'],
+  ['--ink-accent', '#14f195', '#08683f', 'Links, selected labels, accent text', 'text'],
+  ['--color-accent', '#14f195', '#0a8f58', 'Solana green. Strokes, [*] markers, focus ring, tab underline. Light uses a deeper green so strokes clear 3:1 on the surface', 'ui'],
+  ['--line-strong', ['#e2ede6', 0.40], ['#111814', 0.52], 'Control borders (inputs, install box)', 'ui'],
+  ['--color-divider', ['#e2ede6', 0.14], ['#111814', 0.16], 'Hairline rules between sections (decorative)', null]
+];
+const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+const toHex = a => '#' + a.map(v => Math.round(v).toString(16).padStart(2, '0')).join('');
+const mix = (fg, a, bg) => toHex(hex(fg).map((v, i) => v * a + hex(bg)[i] * (1 - a)));
+const lum = h => { const [r, g, b] = hex(h).map(v => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }); return 0.2126 * r + 0.7152 * g + 0.0722 * b; };
+const ratio = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
+class Component extends DCLogic {
+  state = { d: null };
+  _init = (() => {
+    try {
+      let t = new URLSearchParams(location.search).get('theme');
+      if (!t) { try { t = localStorage.getItem('aikit-theme'); } catch (e) {} }
+      document.documentElement.dataset.theme = t === 'light' ? 'light' : 'dark';
+    } catch (e) {}
+  })();
+  componentDidMount() { import(new URL('kit-data.js', location.href).href).then(d => this.setState({ d })); }
+  renderVals() {
+    const d = this.state.d;
+    const cell = (v, bg, surf, kind) => {
+      const c = Array.isArray(v) ? mix(v[0], v[1], bg) : v;
+      if (!kind) return { c, r: kind === null && Array.isArray(v) ? 'decorative' : '' };
+      const r1 = ratio(c, bg), r2 = ratio(c, surf), min = Math.min(r1, r2), need = kind === 'text' ? 4.5 : 3;
+      return { c, r: min.toFixed(2) + ':1 min on bg/surface · ' + (min >= need ? 'passes ' : 'below ') + need + ':1' };
+    };
+    const colors = TOK.map(([name, dk, lt, role, kind]) => {
+      const a = cell(dk, '#0a0d0b', '#111613', kind), b = cell(lt, '#f2f4f2', '#e7ebe8', kind);
+      return { name, dark: a.c, light: b.c, darkRatio: a.r, lightRatio: b.r, role };
+    });
+    const sp = [['--space-1', 4.6], ['--space-2', 9.2], ['--space-3', 13.8], ['--space-4', 18.4], ['--space-6', 27.6], ['--space-8', 36.8]];
+    const spacing = [
+      ...sp.map(([n, v]) => ({ name: n, value: v + 'px · Classical, 1.15× density', bar: v * 3 + 'px' })),
+      { name: 'gutter', value: 'clamp(20px, 5vw, 56px)', bar: '168px' },
+      { name: 'section gap', value: 'clamp(72px, 9vw, 112px)', bar: '336px' },
+      { name: 'container', value: 'max-width 1120px', bar: '100%' },
+      { name: 'radius sm / md / lg', value: '2px / 4px / 7px', bar: '21px' },
+      { name: 'hit target', value: '44px min on mobile', bar: '132px' }
+    ];
+    return {
+      colors, spacing, themes: ['dark', 'light'], stars: null,
+      installTabs: [
+        { label: 'curl', lines: [{ t: 'curl -fsSL https://aikit.superteam.codes | bash' }] },
+        { label: 'verify first', caption: 'Download, read, then run.', lines: [{ t: 'curl -fsSL https://aikit.superteam.codes/install.sh -o /tmp/solana-ai-kit-install.sh' }, { t: 'less /tmp/solana-ai-kit-install.sh' }, { t: 'bash /tmp/solana-ai-kit-install.sh' }] },
+        { label: 'codex / opencode', lines: [{ t: 'curl -fsSL https://aikit.superteam.codes | bash -s -- --agents' }] },
+        { label: 'no install', prompt: true, lines: [{ t: 'Read https://aikit.superteam.codes/CLAUDE-solana.md and follow it for this session. We are building on Solana.' }] }
+      ],
+      card: d ? d.cards('skills')[1] : undefined,
+      md: d ? d.toMarkdown('skills', 'jupiter') : ''
+    };
+  }
+}
+</script>
+</body>
+</html>

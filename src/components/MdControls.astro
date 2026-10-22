@@ -1,0 +1,22 @@
+---
+// Copy as Markdown / View .md / Open in Claude / Open in ChatGPT. The copied
+// text is the same string the .md twin serves.
+import Icon from './Icon.astro';
+import { UI } from '../lib/i18n';
+import type { Lang } from '../lib/site';
+
+interface Props { mdUrl: string; viewHref: string; md: string; lang?: Lang }
+const { mdUrl, viewHref, md, lang = 'en' } = Astro.props;
+const t = UI[lang].md;
+const q = encodeURIComponent(t.prompt(mdUrl));
+---
+<div class="mdc" role="group" aria-label={t.group}>
+  <button type="button" class="btn btn-secondary copy-btn" data-copy data-copy-text={md} data-copy-label={t.copy} data-copied-label={UI[lang].copied}>
+    <Icon name="copy" size={14} class="ico" />
+    <svg class="ok" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ink-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
+    <span aria-live="polite" data-copy-status>{t.copy}</span>
+  </button>
+  <a class="btn btn-secondary" href={viewHref} title={mdUrl} type="text/markdown"><Icon name="file" size={14} />{t.view}</a>
+  <a class="btn btn-ghost" href={`https://claude.ai/new?q=${q}`} target="_blank" rel="noopener">{t.claude} ↗</a>
+  <a class="btn btn-ghost" href={`https://chatgpt.com/?q=${q}`} target="_blank" rel="noopener">{t.gpt} ↗</a>
+</div>

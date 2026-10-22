@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/classical-b0c6d1fc-992f-48a2-a6e8-c8b1280345f0/styles.css">
+<script src="_ds/classical-b0c6d1fc-992f-48a2-a6e8-c8b1280345f0/_ds_bundle.js"></script>
+</helmet>
+<aside aria-label="{{ title }}" style="border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:4px 18px 8px;text-align:left">
+  <h2 style="font-family:var(--mono);font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);font-weight:400;margin:14px 0 6px">{{ title }}</h2>
+  <dl style="margin:0">
+    <sc-for list="{{ facts }}" as="f" hint-placeholder-count="6">
+      <div style="padding:8px 0;border-top:1px solid var(--color-divider);display:flex;flex-direction:column;gap:2px">
+        <dt style="font-family:var(--mono);font-size:12px;color:var(--muted)">{{ f.k }}</dt>
+        <dd style="margin:0;display:flex;gap:8px;align-items:flex-start;justify-content:space-between;font-size:14px;line-height:1.45">
+          <sc-if value="{{ f.isLink }}" hint-placeholder-val="{{ false }}">
+            <a href="{{ f.href }}" style="font-family:var(--mono);font-size:13px;overflow-wrap:anywhere;color:var(--ink-accent)">{{ f.v }}</a>
+          </sc-if>
+          <sc-if value="{{ f.isMono }}" hint-placeholder-val="{{ true }}">
+            <code style="font-family:var(--mono);font-size:13px;overflow-wrap:anywhere;color:var(--color-text)">{{ f.v }}</code>
+          </sc-if>
+          <sc-if value="{{ f.isText }}" hint-placeholder-val="{{ false }}">
+            <span style="color:var(--color-text)">{{ f.v }}</span>
+          </sc-if>
+          <sc-if value="{{ f.isPh }}" hint-placeholder-val="{{ false }}">
+            <span title="Placeholder" style="font-family:var(--mono);font-size:12px;color:var(--muted);border:1px dashed var(--line-strong);border-radius:var(--radius-sm);padding:1px 6px">{{ f.v }}</span>
+          </sc-if>
+          <sc-if value="{{ f.copy }}" hint-placeholder-val="{{ false }}">
+            <button type="button" onClick="{{ f.doCopy }}" aria-label="{{ f.copyAria }}" style="flex:none;font-family:var(--mono);font-size:11px;color:var(--ink-accent);background:transparent;border:1px solid var(--color-divider);border-radius:var(--radius-sm);padding:3px 6px;cursor:pointer" style-hover="border-color:var(--color-accent)"><span aria-live="polite">{{ f.copyText }}</span></button>
+          </sc-if>
+        </dd>
+      </div>
+    </sc-for>
+  </dl>
+</aside>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:320,&quot;height&quot;:560},&quot;facts&quot;:{&quot;editor&quot;:null,&quot;default&quot;:[{&quot;k&quot;:&quot;Source&quot;,&quot;v&quot;:&quot;jup-ag/agent-skills&quot;,&quot;href&quot;:&quot;https://github.com/jup-ag/agent-skills&quot;},{&quot;k&quot;:&quot;Pinned commit&quot;,&quot;v&quot;:&quot;a2211e3f6a7caa03310c7a9a8d816e723b0bdc5f&quot;,&quot;copy&quot;:&quot;a2211e3f6a7caa03310c7a9a8d816e723b0bdc5f&quot;},{&quot;k&quot;:&quot;Licence&quot;,&quot;v&quot;:&quot;MIT&quot;},{&quot;k&quot;:&quot;Upstream stars&quot;,&quot;v&quot;:&quot;84&quot;},{&quot;k&quot;:&quot;Upstream last commit&quot;,&quot;v&quot;:&quot;2026-07-07&quot;},{&quot;k&quot;:&quot;Pinned by the kit&quot;,&quot;v&quot;:&quot;⟨pinned_at⟩&quot;,&quot;ph&quot;:true}],&quot;tsType&quot;:&quot;{k:string;v:string;href?:string;copy?:string;ph?:boolean;mono?:boolean}[]&quot;},&quot;title&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Facts&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;en&quot;,&quot;br&quot;],&quot;default&quot;:&quot;en&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { copied: null };
+  componentWillUnmount() { clearTimeout(this.tm); }
+  renderVals() {
+    const br = this.props.lang === 'br';
+    const facts = (this.props.facts || []).map((f, i) => ({
+      k: f.k, v: f.v, href: f.href,
+      isLink: !!f.href && !f.ph, isMono: !f.href && !f.ph && f.mono !== false, isText: !f.href && !f.ph && f.mono === false, isPh: !!f.ph,
+      copy: !!f.copy,
+      copyText: this.state.copied === i ? (br ? 'copiado' : 'copied') : (br ? 'copiar' : 'copy'),
+      copyAria: (br ? 'Copiar ' : 'Copy ') + f.k,
+      doCopy: () => {
+        try { navigator.clipboard.writeText(f.copy).catch(() => {}); } catch (e) {}
+        this.setState({ copied: i });
+        clearTimeout(this.tm);
+        this.tm = setTimeout(() => this.setState({ copied: null }), 1600);
+      }
+    }));
+    return { facts, title: this.props.title || (br ? 'Fatos' : 'Facts') };
+  }
+}
+</script>
+</body>
+</html>

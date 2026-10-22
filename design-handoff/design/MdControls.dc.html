@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/classical-b0c6d1fc-992f-48a2-a6e8-c8b1280345f0/styles.css">
+<script src="_ds/classical-b0c6d1fc-992f-48a2-a6e8-c8b1280345f0/_ds_bundle.js"></script>
+</helmet>
+<div role="group" aria-label="{{ groupLabel }}" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+  <button type="button" class="btn btn-secondary" onClick="{{ copy }}" style="font-family:var(--mono);font-size:12px;font-weight:400;padding:8px 11px;color:var(--color-text);white-space:nowrap">
+    <sc-if value="{{ notCopied }}" hint-placeholder-val="{{ true }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></sc-if>
+    <sc-if value="{{ copied }}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ink-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></sc-if>
+    <span aria-live="polite">{{ copyText }}</span>
+  </button>
+  <a class="btn btn-secondary" href="{{ viewHref }}" title="{{ mdUrl }}" style="font-family:var(--mono);font-size:12px;font-weight:400;padding:8px 11px;color:var(--color-text);white-space:nowrap">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
+    {{ viewText }}
+  </a>
+  <a class="btn btn-ghost" href="{{ claudeHref }}" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:12px;font-weight:400;padding:8px 8px;color:var(--ink-accent);white-space:nowrap">{{ claudeText }} ↗</a>
+  <a class="btn btn-ghost" href="{{ gptHref }}" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:12px;font-weight:400;padding:8px 8px;color:var(--ink-accent);white-space:nowrap">{{ gptText }} ↗</a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:640,&quot;height&quot;:60},&quot;mdUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://aikit.superteam.codes/skills/jupiter.md&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;viewHref&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;md&quot;:{&quot;editor&quot;:null,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;en&quot;,&quot;br&quot;],&quot;default&quot;:&quot;en&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { copied: false };
+  componentWillUnmount() { clearTimeout(this.tm); }
+  copy = () => {
+    try { navigator.clipboard.writeText(this.props.md || '').catch(() => {}); } catch (e) {}
+    this.setState({ copied: true });
+    clearTimeout(this.tm);
+    this.tm = setTimeout(() => this.setState({ copied: false }), 1800);
+  };
+  renderVals() {
+    const br = this.props.lang === 'br';
+    const url = this.props.mdUrl || 'https://aikit.superteam.codes/skills/jupiter.md';
+    const q = encodeURIComponent((br ? 'Leia ' + url + ' e use nesta sessão' : 'Read ' + url + ' and use it for this session'));
+    return {
+      mdUrl: url, viewHref: this.props.viewHref || url, copy: this.copy,
+      copied: this.state.copied, notCopied: !this.state.copied,
+      copyText: this.state.copied ? (br ? 'Copiado' : 'Copied') : (br ? 'Copiar como Markdown' : 'Copy as Markdown'),
+      viewText: br ? 'Ver .md' : 'View .md',
+      claudeText: br ? 'Abrir no Claude' : 'Open in Claude', gptText: br ? 'Abrir no ChatGPT' : 'Open in ChatGPT',
+      claudeHref: 'https://claude.ai/new?q=' + q, gptHref: 'https://chatgpt.com/?q=' + q,
+      groupLabel: br ? 'Versão em Markdown' : 'Markdown version'
+    };
+  }
+}
+</script>
+</body>
+</html>

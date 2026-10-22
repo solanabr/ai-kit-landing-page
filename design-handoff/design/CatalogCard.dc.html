@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/classical-b0c6d1fc-992f-48a2-a6e8-c8b1280345f0/styles.css">
+<script src="_ds/classical-b0c6d1fc-992f-48a2-a6e8-c8b1280345f0/_ds_bundle.js"></script>
+</helmet>
+<sc-if value="{{ isGrid }}" hint-placeholder-val="{{ true }}">
+  <article class="card" style="height:100%;padding:14px 16px 12px;gap:7px;text-align:left" style-hover="border-color:var(--line-strong)">
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+      <sc-if value="{{ isSkill }}" hint-placeholder-val="{{ true }}">
+        <a href="{{ it.href }}" style="font-family:var(--font-heading);font-weight:400;font-size:22px;line-height:1.15;color:var(--color-text);text-decoration:none" style-hover="color:var(--ink-accent)">{{ it.title }}</a>
+      </sc-if>
+      <sc-if value="{{ isTool }}" hint-placeholder-val="{{ false }}">
+        <a href="{{ it.href }}" style="font-family:var(--mono);font-weight:500;font-size:15px;line-height:1.5;color:var(--color-text);text-decoration:none" style-hover="color:var(--ink-accent)">{{ it.title }}</a>
+      </sc-if>
+      <sc-if value="{{ it.official }}" hint-placeholder-val="{{ true }}">
+        <span style="display:inline-flex;align-items:center;gap:4px;font-family:var(--mono);font-size:11px;line-height:1;padding:3px 6px;border:1px solid var(--color-accent);color:var(--ink-accent);border-radius:var(--radius-sm)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>{{ officialLabel }}</span>
+      </sc-if>
+      <sc-if value="{{ hasModel }}" hint-placeholder-val="{{ false }}">
+        <span style="font-family:var(--mono);font-size:11px;line-height:1;padding:3px 6px;border:1px solid var(--line-strong);color:var(--color-text);border-radius:var(--radius-sm)">{{ it.model }}</span>
+      </sc-if>
+      <sc-if value="{{ it.sample }}" hint-placeholder-val="{{ false }}">
+        <span title="Not from skill-registry.json" style="margin-left:auto;font-family:var(--mono);font-size:10px;line-height:1;padding:3px 5px;border:1px dashed var(--line-strong);color:var(--muted);border-radius:var(--radius-sm)">sample</span>
+      </sc-if>
+    </div>
+    <div style="font-family:var(--mono);font-size:12px;color:var(--muted)">{{ it.maintainer }}{{ defText }}</div>
+    <p style="margin:0;font-size:14px;line-height:1.5;flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;text-wrap:pretty">{{ it.desc }}</p>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <sc-for list="{{ it.tags }}" as="t" hint-placeholder-count="2">
+        <span style="font-family:var(--mono);font-size:11px;line-height:1;padding:4px 7px;border:1px solid var(--color-divider);border-radius:var(--radius-sm);color:var(--muted)">{{ t }}</span>
+      </sc-for>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;border-top:1px solid var(--color-divider);padding-top:12px;margin-top:4px">
+      <sc-if value="{{ isSkill }}" hint-placeholder-val="{{ true }}">
+        <span title="{{ shaTitle }}" style="flex:none;font-family:var(--mono);font-size:11px;line-height:1;padding:5px 6px;border:1px solid var(--color-divider);border-radius:var(--radius-sm);color:var(--color-text)">@ {{ shaText }}</span>
+      </sc-if>
+      <button type="button" onClick="{{ copy }}" aria-label="{{ copyAria }}" style="flex:1;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:8px;font-family:var(--mono);font-size:12px;color:var(--color-text);background:transparent;border:1px solid var(--color-divider);border-radius:var(--radius-sm);padding:5px 8px;cursor:pointer;min-height:30px" style-hover="border-color:var(--line-strong)">
+        <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ it.install }}</span>
+        <span aria-live="polite" style="flex:none;color:var(--ink-accent)">{{ copyMark }}</span>
+      </button>
+    </div>
+  </article>
+</sc-if>
+<sc-if value="{{ isList }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px 24px;padding:9px 4px;border-bottom:1px solid var(--color-divider);text-align:left" style-hover="background:color-mix(in srgb,var(--color-text) 3%,transparent)">
+    <div style="flex:0 1 270px;min-width:200px;display:flex;flex-direction:column;gap:2px">
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <a href="{{ it.href }}" style="font-family:var(--mono);font-weight:500;font-size:14px;color:var(--color-text);text-decoration:none" style-hover="color:var(--ink-accent)">{{ listTitle }}</a>
+        <sc-if value="{{ it.official }}" hint-placeholder-val="{{ true }}">
+          <span style="font-family:var(--mono);font-size:10px;line-height:1;padding:3px 5px;border:1px solid var(--color-accent);color:var(--ink-accent);border-radius:var(--radius-sm)">{{ officialLabel }}</span>
+        </sc-if>
+        <sc-if value="{{ hasModel }}" hint-placeholder-val="{{ false }}">
+          <span style="font-family:var(--mono);font-size:10px;line-height:1;padding:3px 5px;border:1px solid var(--line-strong);border-radius:var(--radius-sm)">{{ it.model }}</span>
+        </sc-if>
+        <sc-if value="{{ it.sample }}" hint-placeholder-val="{{ false }}">
+          <span style="font-family:var(--mono);font-size:10px;line-height:1;padding:3px 5px;border:1px dashed var(--line-strong);color:var(--muted);border-radius:var(--radius-sm)">sample</span>
+        </sc-if>
+      </div>
+      <span style="font-family:var(--mono);font-size:12px;color:var(--muted)">{{ it.maintainer }}{{ defText }}</span>
+    </div>
+    <p style="flex:1 1 320px;margin:0;font-size:14px;line-height:1.5;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ it.desc }}</p>
+    <div style="display:flex;gap:8px;align-items:center;flex:none">
+      <sc-if value="{{ isSkill }}" hint-placeholder-val="{{ true }}">
+        <span title="{{ shaTitle }}" style="font-family:var(--mono);font-size:11px;line-height:1;padding:5px 6px;border:1px solid var(--color-divider);border-radius:var(--radius-sm)">@ {{ shaText }}</span>
+      </sc-if>
+      <button type="button" class="btn btn-secondary btn-icon" onClick="{{ copy }}" aria-label="{{ copyAria }}" title="{{ it.install }}" style="width:32px;height:32px;color:var(--color-text)">
+        <sc-if value="{{ notCopied }}" hint-placeholder-val="{{ true }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></sc-if>
+        <sc-if value="{{ copied }}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ink-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></sc-if>
+      </button>
+    </div>
+  </div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:360,&quot;height&quot;:260},&quot;item&quot;:{&quot;editor&quot;:null,&quot;default&quot;:{&quot;id&quot;:&quot;jupiter&quot;,&quot;title&quot;:&quot;Jupiter Agent Skills&quot;,&quot;href&quot;:&quot;#&quot;,&quot;maintainer&quot;:&quot;jup-ag&quot;,&quot;official&quot;:true,&quot;desc&quot;:&quot;Jupiter's official skills: integrating-jupiter (swap, lend, perps, trigger, recurring), jupiter-lend, jupiter-swap-migration, jupiter-vrfd.&quot;,&quot;sha&quot;:&quot;a2211e3&quot;,&quot;tags&quot;:[&quot;DeFi&quot;],&quot;install&quot;:&quot;bash .claude/bin/skills.sh add jupiter&quot;,&quot;def&quot;:false},&quot;tsType&quot;:&quot;object&quot;},&quot;kind&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;skills&quot;,&quot;agents&quot;,&quot;commands&quot;],&quot;default&quot;:&quot;skills&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;view&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;grid&quot;,&quot;list&quot;],&quot;default&quot;:&quot;grid&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;en&quot;,&quot;br&quot;],&quot;default&quot;:&quot;en&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { copied: false };
+  componentWillUnmount() { clearTimeout(this.tm); }
+  copy = () => {
+    const it = this.props.item || {};
+    try { navigator.clipboard.writeText(it.install || '').catch(() => {}); } catch (e) {}
+    this.setState({ copied: true });
+    clearTimeout(this.tm);
+    this.tm = setTimeout(() => this.setState({ copied: false }), 1600);
+  };
+  renderVals() {
+    const it = this.props.item || { tags: [] };
+    const kind = this.props.kind || 'skills';
+    const br = this.props.lang === 'br';
+    const isSkill = kind === 'skills';
+    return {
+      it, isGrid: this.props.view !== 'list', isList: this.props.view === 'list',
+      isSkill, isTool: !isSkill, hasModel: !!it.model,
+      listTitle: isSkill ? it.id : it.title,
+      officialLabel: br ? 'Oficial' : 'Official',
+      defText: isSkill ? (it.def ? (br ? ' · padrão' : ' · default') : (br ? ' · sob demanda' : ' · on demand')) : '',
+      shaText: it.sha || '·······', shaTitle: it.sha ? 'Pinned commit' : 'Sample entry: commit read from skill-registry.json at build',
+      copy: this.copy, copied: this.state.copied, notCopied: !this.state.copied,
+      copyMark: this.state.copied ? (br ? 'copiado' : 'copied') : '⧉',
+      copyAria: (br ? 'Copiar: ' : 'Copy: ') + (it.install || '')
+    };
+  }
+}
+</script>
+</body>
+</html>

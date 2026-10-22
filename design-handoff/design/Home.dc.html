@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="icon" type="image/svg+xml" href="logo.svg">
+<title>Solana AI Kit · Claude Code, set up to ship on Solana</title>
+<meta name="description" content="Open-source agents, workflow commands and pinned skill packs that set up Claude Code, Codex and opencode to build on Solana.">
+<link rel="alternate" type="text/markdown" href="https://aikit.superteam.codes/index.md">
+<link rel="alternate" hreflang="en" href="https://aikit.superteam.codes/">
+<link rel="alternate" hreflang="pt-BR" href="https://aikit.superteam.codes/br">
+<link rel="alternate" hreflang="x-default" href="https://aikit.superteam.codes/">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="_ds/classical-b0c6d1fc-992f-48a2-a6e8-c8b1280345f0/styles.css">
+<script src="_ds/classical-b0c6d1fc-992f-48a2-a6e8-c8b1280345f0/_ds_bundle.js"></script>
+<style>
+@font-face{font-family:"VT323";src:url("fonts/vt323-latin-400-normal.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap;size-adjust:125%;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"VT323";src:url("fonts/vt323-latin-ext-400-normal.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap;size-adjust:125%;unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"VT323";src:url("fonts/vt323-vietnamese-400-normal.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap;size-adjust:125%;unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB}
+:root,[data-theme="dark"]{--font-heading:"VT323","IBM Plex Mono",ui-monospace,monospace;--font-heading-weight:400;--font-body:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;--mono:"VT323","IBM Plex Mono",ui-monospace,monospace;--color-bg:#0a0d0b;--color-surface:#111613;--color-text:#e2ede6;--color-accent:#14f195;--color-divider:color-mix(in srgb,#e2ede6 14%,transparent);--line-strong:color-mix(in srgb,#e2ede6 40%,transparent);--muted:#9daea4;--ink-accent:#14f195;--shadow-sm:0 0 0 1px rgba(0,0,0,.4);--shadow-md:0 8px 24px rgba(0,0,0,.5);--shadow-lg:0 16px 40px rgba(0,0,0,.6);color-scheme:dark}
+[data-theme="light"]{--color-bg:#f2f4f2;--color-surface:#e7ebe8;--color-text:#111814;--color-accent:#0a8f58;--color-divider:color-mix(in srgb,#111814 16%,transparent);--line-strong:color-mix(in srgb,#111814 52%,transparent);--muted:#4c5751;--ink-accent:#08683f;--shadow-sm:0 1px 2px color-mix(in srgb,#111814 14%,transparent);--shadow-md:0 3px 10px color-mix(in srgb,#111814 16%,transparent);--shadow-lg:0 12px 32px color-mix(in srgb,#111814 22%,transparent);color-scheme:light}
+body{margin:0;background:var(--color-bg);color:var(--color-text);font-family:var(--font-body);-webkit-font-smoothing:antialiased}
+a{color:var(--ink-accent)}a:hover{color:var(--color-text)}
+summary{list-style:none}summary::-webkit-details-marker{display:none}
+</style>
+</helmet>
+<div data-screen-label="Home" style="min-height:100vh;background:var(--color-bg);color:var(--color-text)">
+  <dc-import name="Nav" lang="en" active="home" stars="{{ stars }}" hint-size="100%,62px"></dc-import>
+  <main style="max-width:1120px;margin:0 auto;padding:0 clamp(20px,5vw,56px)">
+
+    <section aria-labelledby="hero-h" style="padding:clamp(32px,5vw,64px) 0 0">
+      <p style="font-family:var(--mono);font-size:12px;letter-spacing:0.04em;color:var(--muted);margin:0 0 14px">v{{ version }} · MIT · open source · Superteam Brazil</p>
+      <h1 id="hero-h" style="font-family:var(--font-heading);font-weight:400;font-size:clamp(38px,5.4vw,68px);line-height:0.95;letter-spacing:0;margin:0 0 16px;max-width:18ch;text-wrap:balance">
+        <sc-if value="{{ t1 }}" hint-placeholder-val="{{ true }}">Claude Code, set up to ship on Solana.</sc-if>
+        <sc-if value="{{ t2 }}" hint-placeholder-val="{{ false }}">From idea to mainnet, inside your coding agent.</sc-if>
+        <sc-if value="{{ t3 }}" hint-placeholder-val="{{ false }}">Your coding agent, fluent in Solana.</sc-if>
+      </h1>
+      <p style="font-family:var(--mono);font-size:13.5px;line-height:1.45;color:var(--muted);max-width:72ch;margin:0 0 24px;text-wrap:pretty">Open-source agents, workflow commands and pinned skill packs from the Solana ecosystem, for every step from validating the idea to launch.</p>
+      <div>
+        <dc-import name="InstallBox" tabs="{{ installTabs }}" note="Run it from your project's root." lang="en" hint-size="100%,176px"></dc-import>
+        <div style="display:flex;gap:12px 20px;align-items:center;margin-top:16px;flex-wrap:wrap">
+          <a class="btn btn-secondary" href="https://github.com/solanabr/ai-kit" style="font-family:var(--mono);font-size:13px;font-weight:400;color:var(--color-text);min-height:40px">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>
+            View on GitHub
+          </a>
+          <span style="font-family:var(--mono);font-size:12px;color:var(--muted)">No account, no sign-up.</span>
+        </div>
+      </div>
+      <div style="margin-top:clamp(24px,3vw,36px)">
+        <dc-import name="Transcript" lang="en" autoplay="{{ autoplay }}" hint-size="100%,440px"></dc-import>
+      </div>
+    </section>
+
+    <section aria-labelledby="inside-h" style="margin-top:clamp(40px,5vw,64px);padding-top:clamp(24px,3vw,36px);border-top:1px solid var(--color-divider);display:flex;flex-wrap:wrap;gap:16px 48px">
+      <div style="flex:1 1 260px">
+        <p style="font-family:var(--mono);font-size:12px;color:var(--muted);margin:0 0 6px">§ 01</p>
+        <h2 id="inside-h" style="font-family:var(--font-heading);font-weight:400;font-size:clamp(28px,3.2vw,38px);line-height:1;margin:0">What's inside</h2>
+      </div>
+      <ul style="flex:2.2 1 520px;list-style:none;margin:0;padding:0">
+        <sc-for list="{{ inside }}" as="i" hint-placeholder-count="6">
+          <li style="display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px;padding:11px 0;border-top:1px solid var(--color-divider)">
+            <span aria-hidden="true" style="font-family:var(--mono);font-size:14px;line-height:1.9;color:var(--color-accent)">[*]</span>
+            <div>
+              <div style="font-family:var(--font-heading);font-weight:400;font-size:22px;line-height:1.15;text-wrap:pretty"><span style="font-variant-numeric:tabular-nums lining-nums">{{ i.n }}</span>{{ i.label }}</div>
+              <div style="font-family:var(--mono);font-size:12.5px;line-height:1.7;color:var(--muted);margin-top:6px;text-wrap:pretty">{{ i.detail }}</div>
+            </div>
+          </li>
+        </sc-for>
+      </ul>
+    </section>
+
+    <section aria-labelledby="fig-h" style="margin-top:clamp(40px,5vw,64px)">
+      <p style="font-family:var(--mono);font-size:12px;color:var(--muted);margin:0 0 6px">§ 02</p>
+      <h2 id="fig-h" style="font-family:var(--font-heading);font-weight:400;font-size:clamp(28px,3.2vw,38px);line-height:1;margin:0 0 18px">Figures</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr));gap:24px 24px">
+        <sc-for list="{{ figures }}" as="f" hint-placeholder-count="4">
+          <figure style="margin:0;padding-top:20px;border-top:1px solid var(--line-strong);display:flex;flex-direction:column">
+            <div style="min-height:60px;display:flex;flex-direction:column;justify-content:flex-end;gap:8px">
+              <sc-if value="{{ f.ph }}" hint-placeholder-val="{{ false }}">
+                <span style="align-self:flex-start;font-family:var(--mono);font-size:clamp(22px,2.4vw,28px);color:var(--muted);border:1px dashed var(--line-strong);border-radius:var(--radius-sm);padding:6px 12px">⟨{{ f.key }}⟩</span>
+              </sc-if>
+              <sc-if value="{{ f.real }}" hint-placeholder-val="{{ true }}">
+                <span style="font-family:var(--font-heading);font-weight:400;font-size:clamp(44px,4.6vw,60px);line-height:0.9;font-variant-numeric:tabular-nums lining-nums;letter-spacing:0">{{ f.v }}</span>
+              </sc-if>
+            </div>
+            <figcaption style="margin-top:16px;font-family:var(--mono);font-size:13px;color:var(--color-text)"><span style="color:var(--ink-accent)">Fig {{ f.n }}.</span> {{ f.label }}</figcaption>
+            <span style="margin-top:4px;font-family:var(--mono);font-size:11px;color:var(--muted)">{{ f.src }}</span>
+          </figure>
+        </sc-for>
+      </div>
+    </section>
+
+    <section aria-labelledby="task-h" style="margin-top:clamp(40px,5vw,64px);padding-top:clamp(24px,3vw,36px);border-top:1px solid var(--color-divider);display:flex;flex-wrap:wrap;gap:16px 48px">
+      <div style="flex:1 1 260px">
+        <p style="font-family:var(--mono);font-size:12px;color:var(--muted);margin:0 0 6px">§ 03</p>
+        <h2 id="task-h" style="font-family:var(--font-heading);font-weight:400;font-size:clamp(28px,3.2vw,38px);line-height:1;margin:0 0 16px">Start with your task</h2>
+        <p style="font-size:14px;line-height:1.55;color:var(--muted);margin:0;max-width:40ch;text-wrap:pretty">Pick what you are building. Each task points to the agent, command and packs that fit it.</p>
+      </div>
+      <div style="flex:2.2 1 520px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));border:1px solid var(--color-divider);border-radius:var(--radius-md)">
+        <div role="tablist" aria-orientation="vertical" aria-label="Tasks" style="display:flex;flex-direction:column;padding:8px 0;border-right:1px solid var(--color-divider)">
+          <sc-for list="{{ tasks }}" as="t" hint-placeholder-count="6">
+            <button type="button" role="tab" aria-selected="{{ t.sel }}" onClick="{{ t.pick }}" style="display:flex;gap:12px;align-items:baseline;text-align:left;background:transparent;border:0;padding:7px 18px;min-height:40px;cursor:pointer;font-family:var(--font-heading);font-weight:400;font-size:19px;line-height:1.25;color:{{ t.color }}" style-hover="color:var(--color-text)">
+              <span aria-hidden="true" style="font-family:var(--mono);font-size:13px;font-weight:400;color:var(--color-accent);width:1ch">{{ t.mark }}</span>{{ t.label }}
+            </button>
+          </sc-for>
+        </div>
+        <div role="tabpanel" style="padding:16px 20px;display:flex;flex-direction:column;gap:16px;min-width:0">
+          <dl style="margin:0;display:flex;flex-direction:column;gap:14px">
+            <div><dt style="font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:4px">Agent</dt><dd style="margin:0"><a href="{{ panel.agentHref }}" style="font-family:var(--mono);font-size:14px">{{ panel.agent }}</a></dd></div>
+            <div><dt style="font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:4px">Command</dt><dd style="margin:0"><a href="{{ panel.commandHref }}" style="font-family:var(--mono);font-size:14px">/{{ panel.command }}</a></dd></div>
+            <div><dt style="font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:4px">Packs</dt>
+              <dd style="margin:0;display:flex;flex-wrap:wrap;gap:6px 14px">
+                <sc-for list="{{ panel.packs }}" as="p" hint-placeholder-count="2"><a href="{{ p.href }}" style="font-family:var(--mono);font-size:14px">{{ p.id }}</a></sc-for>
+              </dd>
+            </div>
+          </dl>
+          <div style="border-top:1px solid var(--color-divider);padding-top:14px">
+            <div style="font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:6px">Try</div>
+            <code style="display:block;font-family:var(--mono);font-size:13px;line-height:1.6;color:var(--color-text);overflow-wrap:anywhere"><span aria-hidden="true" style="color:var(--color-accent)">&gt; </span>{{ panel.prompt }}</code>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="safe-h" style="margin-top:clamp(40px,5vw,64px);padding-top:clamp(24px,3vw,36px);border-top:1px solid var(--color-divider);display:flex;flex-wrap:wrap;gap:16px 48px">
+      <div style="flex:1 1 260px">
+        <p style="font-family:var(--mono);font-size:12px;color:var(--muted);margin:0 0 6px">§ 04</p>
+        <h2 id="safe-h" style="font-family:var(--font-heading);font-weight:400;font-size:clamp(28px,3.2vw,38px);line-height:1;margin:0 0 16px">Built for mainnet safety</h2>
+        <p style="font-size:14px;line-height:1.55;color:var(--muted);margin:0;max-width:40ch;text-wrap:pretty">The firewall decides what an agent may do without asking you. Change the tier with <code style="font-family:var(--mono);font-size:14px;color:var(--color-text)">/firewall</code>.</p>
+      </div>
+      <div style="flex:2.2 1 520px;min-width:0">
+        <div style="overflow-x:auto;margin:0 -4px"><table class="table" style="font-family:var(--mono);font-size:clamp(11px,3vw,13px);table-layout:auto">
+          <thead>
+            <tr>
+              <th scope="col" style="font-family:var(--mono);color:var(--muted)"><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Action</span></th>
+              <sc-for list="{{ tierCols }}" as="c" hint-placeholder-count="4"><th scope="col" style="font-family:var(--mono);font-size:clamp(11px,3vw,12px);letter-spacing:0.02em;text-transform:none;color:var(--color-text);padding:9px clamp(4px,1.4vw,9px)">{{ c }}</th></sc-for>
+            </tr>
+          </thead>
+          <tbody>
+            <sc-for list="{{ tierRows }}" as="r" hint-placeholder-count="3">
+              <tr>
+                <th scope="row" style="font-family:var(--font-body);font-weight:400;font-size:14px;letter-spacing:0;text-transform:none;color:var(--color-text);padding:8px clamp(4px,1.4vw,9px);border-bottom:1px solid var(--color-divider);text-align:left;font-size:clamp(12px,3.4vw,14px)">{{ r.label }}</th>
+                <sc-for list="{{ r.cells }}" as="c" hint-placeholder-count="4"><td style="color:{{ c.color }};padding:8px clamp(4px,1.4vw,9px);overflow-wrap:anywhere">{{ c.text }}</td></sc-for>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table></div>
+        <p style="font-family:var(--mono);font-size:11px;color:var(--muted);margin:10px 0 0">Draft values · generated from the firewall config at build</p>
+        <ul style="list-style:none;margin:18px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:20px 32px">
+          <li style="display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px">
+            <span aria-hidden="true" style="font-family:var(--mono);font-size:14px;color:var(--color-accent);line-height:1.6">[*]</span>
+            <p style="margin:0;font-size:14px;line-height:1.55;text-wrap:pretty"><strong style="font-weight:600">Pinned and scanned.</strong> Every skill pack is pinned to a commit and scanned before it ships, so a pack changes only when a kit release moves its pin.</p>
+          </li>
+          <li style="display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px">
+            <span aria-hidden="true" style="font-family:var(--mono);font-size:14px;color:var(--color-accent);line-height:1.6">[*]</span>
+            <p style="margin:0;font-size:14px;line-height:1.55;text-wrap:pretty"><strong style="font-weight:600">Keypair protection.</strong> Reads of keypairs and secret files go through the firewall, so their contents stay out of the model's context unless you allow it.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section aria-labelledby="eco-h" style="margin-top:clamp(40px,5vw,64px);padding-top:clamp(24px,3vw,36px);border-top:1px solid var(--color-divider);display:flex;flex-wrap:wrap;gap:16px 48px">
+      <div style="flex:1 1 260px">
+        <p style="font-family:var(--mono);font-size:12px;color:var(--muted);margin:0 0 6px">§ 05</p>
+        <h2 id="eco-h" style="font-family:var(--font-heading);font-weight:400;font-size:clamp(28px,3.2vw,38px);line-height:1;margin:0 0 16px">Skills from the ecosystem</h2>
+        <p style="font-size:14px;line-height:1.55;color:var(--muted);margin:0;max-width:40ch;text-wrap:pretty">Packs come from the protocols' own repositories.</p>
+      </div>
+      <div style="flex:2.2 1 520px;display:flex;flex-direction:column;gap:20px">
+        <ul style="list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px">
+          <sc-for list="{{ maintainers }}" as="m" hint-placeholder-count="12">
+            <li><a href="{{ m.href }}" style="display:inline-flex;align-items:center;min-height:40px;font-family:var(--mono);font-size:14px;padding:6px 14px;border:1px solid var(--color-divider);border-radius:var(--radius-md);color:var(--color-text);text-decoration:none" style-hover="border-color:var(--color-accent);color:var(--ink-accent)">{{ m.name }}</a></li>
+          </sc-for>
+        </ul>
+        <a href="Catalog.dc.html?kind=skills" style="font-family:var(--mono);font-size:13px;align-self:flex-start">{{ allPacksLabel }} →</a>
+      </div>
+    </section>
+
+    <section aria-labelledby="faq-h" style="margin-top:clamp(40px,5vw,64px);padding-top:clamp(24px,3vw,36px);border-top:1px solid var(--color-divider);display:flex;flex-wrap:wrap;gap:16px 48px">
+      <div style="flex:1 1 260px">
+        <p style="font-family:var(--mono);font-size:12px;color:var(--muted);margin:0 0 6px">§ 06</p>
+        <h2 id="faq-h" style="font-family:var(--font-heading);font-weight:400;font-size:clamp(28px,3.2vw,38px);line-height:1;margin:0">FAQ</h2>
+      </div>
+      <div style="flex:2.2 1 520px;border-bottom:1px solid var(--color-divider)">
+        <details style="border-top:1px solid var(--color-divider)">
+          <summary style="cursor:pointer;display:flex;justify-content:space-between;gap:16px;align-items:baseline;padding:11px 0;font-family:var(--font-heading);font-weight:400;font-size:22px;line-height:1.3">Does it work outside Claude Code?<span aria-hidden="true" style="font-family:var(--mono);font-size:14px;font-weight:400;color:var(--color-accent)">[+]</span></summary>
+          <p style="margin:0 0 14px;font-size:14px;line-height:1.6;color:var(--muted);max-width:64ch;text-wrap:pretty">Yes. Claude Code is the primary target. The <code style="font-family:var(--mono);font-size:14px;color:var(--color-text)">--agents</code> flag installs it for Codex, opencode and other agents, and no-install mode works in any agent that can fetch a URL.</p>
+        </details>
+        <details style="border-top:1px solid var(--color-divider)">
+          <summary style="cursor:pointer;display:flex;justify-content:space-between;gap:16px;align-items:baseline;padding:11px 0;font-family:var(--font-heading);font-weight:400;font-size:22px;line-height:1.3">What does it install, and where?<span aria-hidden="true" style="font-family:var(--mono);font-size:14px;font-weight:400;color:var(--color-accent)">[+]</span></summary>
+          <p style="margin:0 0 14px;font-size:14px;line-height:1.6;color:var(--muted);max-width:64ch;text-wrap:pretty">Everything goes into the project you run it from: agents, commands, skill packs and the firewall under <code style="font-family:var(--mono);font-size:14px;color:var(--color-text)">.claude/</code>, plus the MCP server configuration. Four skill packs are installed by default; add others with <code style="font-family:var(--mono);font-size:14px;color:var(--color-text)">bash .claude/bin/skills.sh add &lt;id&gt;</code>.</p>
+        </details>
+        <details style="border-top:1px solid var(--color-divider)">
+          <summary style="cursor:pointer;display:flex;justify-content:space-between;gap:16px;align-items:baseline;padding:11px 0;font-family:var(--font-heading);font-weight:400;font-size:22px;line-height:1.3">Does it send my code anywhere?<span aria-hidden="true" style="font-family:var(--mono);font-size:14px;font-weight:400;color:var(--color-accent)">[+]</span></summary>
+          <p style="margin:0 0 14px;font-size:14px;line-height:1.6;color:var(--muted);max-width:64ch;text-wrap:pretty">The kit is configuration files in your repository. It has no account and no server of its own. Your agent still talks to its model provider, and each MCP server receives only the requests your agent sends to it. You can turn any MCP server off.</p>
+        </details>
+        <details style="border-top:1px solid var(--color-divider)">
+          <summary style="cursor:pointer;display:flex;justify-content:space-between;gap:16px;align-items:baseline;padding:11px 0;font-family:var(--font-heading);font-weight:400;font-size:22px;line-height:1.3">How do updates work?<span aria-hidden="true" style="font-family:var(--mono);font-size:14px;font-weight:400;color:var(--color-accent)">[+]</span></summary>
+          <p style="margin:0 0 14px;font-size:14px;line-height:1.6;color:var(--muted);max-width:64ch;text-wrap:pretty">Run the install command again from your project's root. Skill packs are pinned to commits, so a pack only changes when a new kit release moves its pin after a fresh scan.</p>
+        </details>
+        <details style="border-top:1px solid var(--color-divider)">
+          <summary style="cursor:pointer;display:flex;justify-content:space-between;gap:16px;align-items:baseline;padding:11px 0;font-family:var(--font-heading);font-weight:400;font-size:22px;line-height:1.3">What is "no install" mode?<span aria-hidden="true" style="font-family:var(--mono);font-size:14px;font-weight:400;color:var(--color-accent)">[+]</span></summary>
+          <p style="margin:0 0 14px;font-size:14px;line-height:1.6;color:var(--muted);max-width:64ch;text-wrap:pretty">A short prompt you paste into any agent. It points the agent at <code style="font-family:var(--mono);font-size:14px;color:var(--color-text)">aikit.superteam.codes/CLAUDE-solana.md</code>, which it reads for that session. Nothing is written to your project.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+  <dc-import name="Footer" lang="en" version="{{ version }}" hint-size="100%,380px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;tagline&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;set-up&quot;,&quot;idea-to-mainnet&quot;,&quot;fluent&quot;],&quot;default&quot;:&quot;set-up&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Copy&quot;},&quot;typing&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Demo&quot;}}">
+const STR = {
+  en: {
+    tabs: ['curl', 'verify first', 'codex / opencode', 'no install'],
+    capVerify: 'Download, read, then run.', capAgents: 'Adds configuration for Codex, opencode and other agents.', capNone: 'Paste this into any agent. Nothing is written to your project.',
+    nonePrompt: 'Read https://aikit.superteam.codes/CLAUDE-solana.md and follow it for this session. We are building on Solana.',
+    agents: ' specialized agents', commands: ' workflow commands', packs: ' skill packs, each pinned to a commit and scanned before it ships',
+    packsDetail: (n, names) => n + ' installed by default, the rest added on demand. From ' + names + ' and more.',
+    mcp: ' MCP servers on by default', fw: ' firewall tiers: Off, Relaxed, Medium, High', fwDetail: 'Gates mainnet deploys, secret and keypair reads, and destructive commands.',
+    prog: 'Progressive loading', progDetail: 'Almost none of it enters the model\'s context until a task needs it.',
+    figStars: 'GitHub stars', figPacks: 'skill packs', figMaint: 'ecosystem maintainers', figVer: 'current version',
+    srcStars: 'placeholder · GitHub API, fetched at build', srcPacks: 'skill-registry.json', srcMaint: 'placeholder · distinct maintainers in the registry', srcVer: 'kit release',
+    allPacks: n => 'All ' + n + ' skill packs'
+  },
+  br: {
+    tabs: ['curl', 'verificar antes', 'codex / opencode', 'sem instalar'],
+    capVerify: 'Baixe, leia e depois execute.', capAgents: 'Adiciona a configuração para Codex, opencode e outros agentes.', capNone: 'Cole isto em qualquer agente. Nada é gravado no seu projeto.',
+    nonePrompt: 'Leia https://aikit.superteam.codes/CLAUDE-solana.md e siga as instruções nesta sessão. Estamos construindo na Solana.',
+    agents: ' agentes especializados', commands: ' comandos de fluxo de trabalho', packs: ' pacotes de skills, cada um fixado em um commit e verificado antes de ser publicado',
+    packsDetail: (n, names) => n + ' instalados por padrão; os demais são adicionados sob demanda. De ' + names + ' e outros.',
+    mcp: ' servidores MCP ativos por padrão', fw: ' níveis de firewall: Off, Relaxed, Medium, High', fwDetail: 'Controla deploys na mainnet, a leitura de segredos e keypairs e os comandos destrutivos.',
+    prog: 'Carregamento progressivo', progDetail: 'Quase nada disso entra no contexto do modelo até que uma tarefa precise.',
+    figStars: 'estrelas no GitHub', figPacks: 'pacotes de skills', figMaint: 'mantenedores do ecossistema', figVer: 'versão atual',
+    srcStars: 'placeholder · API do GitHub, lida no build', srcPacks: 'skill-registry.json', srcMaint: 'placeholder · mantenedores distintos no registro', srcVer: 'release do kit',
+    allPacks: n => 'Todos os ' + n + ' pacotes de skills'
+  }
+};
+class Component extends DCLogic {
+  lang = 'en';
+  state = { d: null, task: 0 };
+  _init = (() => {
+    try {
+      let t = new URLSearchParams(location.search).get('theme');
+      if (!t) { try { t = localStorage.getItem('aikit-theme'); } catch (e) {} }
+      document.documentElement.dataset.theme = t === 'light' ? 'light' : 'dark';
+      document.documentElement.lang = this.lang === 'br' ? 'pt-BR' : 'en';
+    } catch (e) {}
+  })();
+  componentDidMount() {
+    import(new URL('kit-data.js', location.href).href).then(d => this.setState({ d }));
+  }
+  renderVals() {
+    const L = this.lang, S = STR[L], d = this.state.d;
+    const tl = this.props.tagline ?? 'set-up';
+    const base = {
+      version: '2.4.0', stars: null, autoplay: this.props.typing ?? true,
+      t1: tl === 'set-up', t2: tl === 'idea-to-mainnet', t3: tl === 'fluent',
+      installTabs: [
+        { label: S.tabs[0], lines: [{ t: 'curl -fsSL https://aikit.superteam.codes | bash' }] },
+        { label: S.tabs[1], caption: S.capVerify, lines: [{ t: 'curl -fsSL https://aikit.superteam.codes/install.sh -o /tmp/solana-ai-kit-install.sh' }, { t: 'less /tmp/solana-ai-kit-install.sh' }, { t: 'bash /tmp/solana-ai-kit-install.sh' }] },
+        { label: S.tabs[2], caption: S.capAgents, lines: [{ t: 'curl -fsSL https://aikit.superteam.codes | bash -s -- --agents' }] },
+        { label: S.tabs[3], caption: S.capNone, prompt: true, lines: [{ t: S.nonePrompt }] }
+      ],
+      inside: [], figures: [], tasks: [], panel: { packs: [] }, tierCols: [], tierRows: [], maintainers: [], allPacksLabel: ''
+    };
+    if (!d) return base;
+    const K = d.KIT, c = K.counts;
+    const ti = this.state.task, task = d.TASKS[ti];
+    return {
+      ...base, version: K.version, stars: K.stars,
+      inside: [
+        { n: c.agents, label: S.agents, detail: d.AGENTS.map(a => a.id).join(', ') },
+        { n: c.commands, label: S.commands, detail: d.COMMANDS.map(x => '/' + x.id).join(', ') + ', …' },
+        { n: c.packs, label: S.packs, detail: S.packsDetail(c.defaultPacks, d.MAINTAINERS.map(m => m.name).join(', ')) },
+        { n: c.mcp, label: S.mcp, detail: d.MCP.map(m => m.name + ' (' + m.role[L] + ')').join(', ') },
+        { n: c.firewallTiers, label: S.fw, detail: S.fwDetail },
+        { n: '', label: S.prog, detail: S.progDetail }
+      ],
+      figures: [
+        { n: 1, key: 'stars', label: S.figStars, src: S.srcStars, v: K.stars, ph: K.stars == null, real: K.stars != null },
+        { n: 2, key: 'packs', label: S.figPacks, src: S.srcPacks, v: c.packs, ph: false, real: true },
+        { n: 3, key: 'maintainers', label: S.figMaint, src: S.srcMaint, v: K.maintainers, ph: K.maintainers == null, real: K.maintainers != null },
+        { n: 4, key: 'version', label: S.figVer, src: S.srcVer, v: K.version, ph: false, real: true }
+      ],
+      tasks: d.TASKS.map((t, j) => ({
+        label: t.label[L], sel: j === ti ? 'true' : 'false', mark: j === ti ? '›' : '',
+        color: j === ti ? 'var(--ink-accent)' : 'var(--muted)', pick: () => this.setState({ task: j })
+      })),
+      panel: {
+        agent: task.agent, agentHref: d.pageHref('agents', task.agent),
+        command: task.command, commandHref: d.pageHref('commands', task.command),
+        packs: task.packs.map(id => ({ id, href: d.pageHref('skills', id) })), prompt: task.prompt[L]
+      },
+      tierCols: d.TIERS.cols,
+      tierRows: d.TIERS.rows.map(r => ({
+        label: r.label[L],
+        cells: r.v.map(v => ({ text: d.TIERS.values[v][L], color: v === 'open' ? 'var(--muted)' : (v === 'block' ? 'var(--ink-accent)' : 'var(--color-text)') }))
+      })),
+      maintainers: d.MAINTAINERS.map(m => ({ name: m.name, href: d.pageHref('skills', m.pack) })),
+      allPacksLabel: S.allPacks(c.packs)
+    };
+  }
+}
+</script>
+</body>
+</html>

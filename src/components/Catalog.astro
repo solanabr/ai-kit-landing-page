@@ -1,0 +1,70 @@
+---
+import Base from '../layouts/Base.astro';
+import CatalogCard from './CatalogCard.astro';
+import Icon from './Icon.astro';
+import { cards, counts } from '../lib/data';
+import { TAGS, type Kind } from '../lib/site';
+
+interface Props { kind: Kind }
+const { kind } = Astro.props;
+const items = cards(kind);
+const title = { skills: 'Skills', agents: 'Agents', commands: 'Commands' }[kind];
+const summary = {
+  skills: `${counts.packs} skill packs from the ecosystem's own repositories · ${counts.defaultPacks} installed by default · each pinned to a commit and scanned`,
+  agents: `${counts.agents} specialized agents · each one is chosen for a task and can hand off to another`,
+  commands: `${counts.commands} workflow commands · type one in Claude Code to start a guided step`
+}[kind];
+const isSkills = kind === 'skills';
+// Only offer the tag chips that match at least one item.
+const tags = isSkills ? TAGS.map(t => t.label).filter(l => items.some(i => i.tags.includes(l))) : [];
+---
+<Base title={`${title} · Solana AI Kit`} description={summary} active={kind} md={`/${kind}.md`}>
+  <div data-catalog data-total={items.length} data-view="grid">
+    <header class="cat-head">
+      <nav class="kinds" aria-label="Catalogs">
+        {(['skills', 'agents', 'commands'] as Kind[]).map(k => <a href={`/${k}`} aria-current={k === kind ? 'page' : undefined}>/{k}</a>)}
+      </nav>
+      <h1 class="h1-page">{title}</h1>
+      <p class="cat-sum">{summary}</p>
+    </header>
+
+    <div class="filters" role="search">
+      <div class="filter-row">
+        <label class="search">
+          <span class="sr-only">Search {title.toLowerCase()}</span>
+          <Icon name="search" />
+          <input type="search" class="input" data-search-input placeholder={isSkills ? 'Search packs, maintainers, triggers' : `Search ${title.toLowerCase()}`} />
+        </label>
+        {isSkills && (
+          <div role="radiogroup" aria-label="Install state" class="seg">
+            {[['all', 'All'], ['default', 'Installed by default'], ['demand', 'Add on demand']].map(([id, label], i) => (
+              <button type="button" role="radio" class="seg-opt" data-def-opt={id} aria-checked={i === 0 ? 'true' : 'false'}>{label}</button>
+            ))}
+          </div>
+        )}
+        <div role="radiogroup" aria-label="View" class="seg">
+          <button type="button" role="radio" class="seg-opt ico" data-view-opt="grid" aria-checked="true" aria-label="Grid view"><Icon name="grid" /></button>
+          <button type="button" role="radio" class="seg-opt ico" data-view-opt="list" aria-checked="false" aria-label="List view"><Icon name="list" /></button>
+        </div>
+      </div>
+      {tags.length > 0 && (
+        <div class="tag-chips" role="group" aria-label="Filter by tag">
+          {tags.map(t => <button type="button" class="tag-chip" data-tag={t} aria-pressed="false">{t}</button>)}
+        </div>
+      )}
+    </div>
+
+    <div class="result-line">
+      <span aria-live="polite" data-result data-template="Showing {n} of {m}">Showing {items.length} of {items.length}</span>
+      {isSkills && <span>Every pack is listed with its pinned commit from skill-registry.json</span>}
+    </div>
+
+    <div class="grid">
+      {items.map(it => <CatalogCard item={it} kind={kind} view="grid" />)}
+    </div>
+    <div class="list">
+      {items.map(it => <CatalogCard item={it} kind={kind} view="list" />)}
+    </div>
+    <div class="empty" data-empty hidden>No matches. <button type="button" data-reset>Clear filters</button></div>
+  </div>
+</Base>

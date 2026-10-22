@@ -1,0 +1,19 @@
+{
+  "name": "ai-kit-landing-page",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Marketing and reference site for Solana AI Kit, with a Markdown twin of every page.",
+  "scripts": {
+    "sync": "node scripts/sync-kit.mjs",
+    "dev": "astro dev",
+    "build": "astro build && node scripts/check-dist.mjs",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "astro": "7.3.8"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
