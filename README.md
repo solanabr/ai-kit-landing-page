@@ -62,7 +62,7 @@ English at `/` and Brazilian Portuguese at `/br` (homepage). Catalog and detail 
 
 `design-handoff/` is the Claude Design handoff this site implements: HTML prototypes of every screen, the token spec and example Markdown output. It is reference only and is not built. The stylesheet in `src/styles/site.css` ports its tokens and component styles. `src/styles/ds.css` is the base "Classical" design system those prototypes load.
 
-The three-bar mark in the wordmark is Solana's logo mark, redrawn. The handoff flags that it needs brand clearance from Solana, or an original mark, before launch.
+The lockup is in `design-handoff/update-logo/`. It uses Solana's three-bar mark, which Superteam is cleared to use.
 
 ## Licence
 
