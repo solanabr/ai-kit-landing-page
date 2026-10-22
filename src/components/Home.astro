@@ -1,0 +1,172 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from './Icon.astro';
+import InstallBox from './InstallBox.astro';
+import Transcript from './Transcript.astro';
+import { HOME } from '../lib/i18n';
+import { INSTALL_HOST, REPO, TASKS, TIERS, type Lang } from '../lib/site';
+import { KIT, agents, commands, counts, ecosystem, mcpList, pagePath } from '../lib/data';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const S = HOME[lang];
+const c = counts;
+
+const installTabs = [
+  { label: S.tabs[0], lines: [`curl -fsSL ${INSTALL_HOST} | bash`] },
+  { label: S.tabs[1], caption: S.capVerify, lines: [`curl -fsSL ${INSTALL_HOST}/install.sh -o /tmp/solana-ai-kit-install.sh`, 'less /tmp/solana-ai-kit-install.sh', 'bash /tmp/solana-ai-kit-install.sh'] },
+  { label: S.tabs[2], caption: S.capAgents, lines: [`curl -fsSL ${INSTALL_HOST} | bash -s -- --agents`] },
+  { label: S.tabs[3], caption: S.capNone, prompt: true, lines: [S.nonePrompt] }
+];
+
+const inside = [
+  { n: c.agents, label: S.agents, detail: agents.map(a => a.id).join(', ') },
+  { n: c.commands, label: S.commands, detail: commands.slice(0, 12).map(x => '/' + x.id).join(', ') + ', …' },
+  { n: c.packs, label: S.packs, detail: S.packsDetail(c.defaultPacks, ecosystem.map(m => m.name).join(', ')) },
+  { n: c.mcp, label: S.mcp, detail: mcpList.map(m => `${m.name} (${m[lang]})`).join(', ') },
+  { n: c.firewallTiers, label: S.fw, detail: S.fwDetail },
+  { n: '', label: S.prog, detail: S.progDetail }
+];
+
+const figures = [
+  { n: 1, key: 'stars', label: S.figStars, src: S.srcStars(KIT.generatedAt), v: KIT.stars },
+  { n: 2, key: 'packs', label: S.figPacks, src: S.srcPacks, v: c.packs },
+  { n: 3, key: 'maintainers', label: S.figMaint, src: S.srcMaint, v: c.maintainers },
+  { n: 4, key: 'version', label: S.figVer, src: S.srcVer, v: KIT.version }
+];
+const faq = S.faq.map(([q, a]) => [q, a.replace('DEFAULTS', String(c.defaultPacks))]);
+const fmt = (v: unknown) => (typeof v === 'number' ? new Intl.NumberFormat(lang === 'br' ? 'pt-BR' : 'en').format(v) : String(v));
+---
+<Base title={S.title} description={S.description} lang={lang} md={lang === 'br' ? '/br/index.md' : '/index.md'} alternates={{ en: '/', br: '/br' }}>
+  <section class="hero" aria-labelledby="hero-h">
+    <p class="kicker">{S.kicker(KIT.version)}</p>
+    <h1 id="hero-h" class="h1-hero">{S.h1}</h1>
+    <p class="subhead">{S.sub}</p>
+    <InstallBox id="install" tabs={installTabs} note={S.note} lang={lang} />
+    <div class="hero-actions">
+      <a class="btn btn-secondary" href={REPO}><Icon name="github" size={15} />{S.github}</a>
+      <span class="small-muted">{S.noAccount}</span>
+    </div>
+    <div class="demo-wrap"><Transcript lang={lang} /></div>
+  </section>
+
+  <section class="section two-col" aria-labelledby="inside-h">
+    <div class="lab"><p class="sec-no">§ 01</p><h2 id="inside-h" class="h2">{S.insideH}</h2></div>
+    <ul class="body inside-list">
+      {inside.map(i => (
+        <li>
+          <span class="marker" aria-hidden="true">[*]</span>
+          <div>
+            <div class="inside-title"><span class="num">{i.n}</span>{i.label}</div>
+            <div class="inside-detail">{i.detail}</div>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="section bare" aria-labelledby="fig-h">
+    <p class="sec-no">§ 02</p>
+    <h2 id="fig-h" class="h2">{S.figH}</h2>
+    <div class="figures">
+      {figures.map(f => (
+        <figure class="figure">
+          <div class="figure-val">
+            {f.v == null
+              ? <span class="figure-ph" title={S.placeholder}>⟨{f.key}⟩</span>
+              : <span class="figure-num">{fmt(f.v)}</span>}
+          </div>
+          <figcaption><span>Fig {f.n}.</span> {f.label}</figcaption>
+          <span class="figure-src">{f.v == null ? `${S.placeholder} · ` : ''}{f.src}</span>
+        </figure>
+      ))}
+    </div>
+  </section>
+
+  <section class="section two-col" aria-labelledby="task-h">
+    <div class="lab">
+      <p class="sec-no">§ 03</p>
+      <h2 id="task-h" class="h2">{S.taskH}</h2>
+      <p class="intro">{S.taskIntro}</p>
+    </div>
+    <div class="body tasks" data-tabs>
+      <div class="task-list" role="tablist" aria-orientation="vertical" aria-label={S.tasksAria}>
+        {TASKS.map((t, i) => (
+          <button type="button" class="task-tab" role="tab" id={`task-tab-${t.id}`} aria-controls={`task-panel-${t.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>
+            <span class="mark" aria-hidden="true">›</span>{t.label[lang]}
+          </button>
+        ))}
+      </div>
+      {TASKS.map((t, i) => (
+        <div class="task-panel" role="tabpanel" id={`task-panel-${t.id}`} aria-labelledby={`task-tab-${t.id}`} hidden={i !== 0}>
+          <dl>
+            <div><dt>{S.agent}</dt><dd><a href={pagePath('agents', t.agent)}>{t.agent}</a></dd></div>
+            <div><dt>{S.command}</dt><dd><a href={pagePath('commands', t.command)}>/{t.command}</a></dd></div>
+            <div><dt>{S.packsLabel}</dt><dd>{t.packs.map(p => <a href={pagePath('skills', p)}>{p}</a>)}</dd></div>
+          </dl>
+          <div class="task-try">
+            <div class="small-muted" style="margin-bottom:6px">{S.tryLabel}</div>
+            <code><span aria-hidden="true">&gt; </span>{t.prompt[lang]}</code>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section two-col" aria-labelledby="safe-h">
+    <div class="lab">
+      <p class="sec-no">§ 04</p>
+      <h2 id="safe-h" class="h2">{S.safeH}</h2>
+      <p class="intro" set:html={S.safeIntro} />
+    </div>
+    <div class="body">
+      <div class="tier-scroll">
+        <table class="table tier-table">
+          <thead>
+            <tr><th scope="col"><span class="sr-only">{S.action}</span></th>{TIERS.cols.map(col => <th scope="col">{col}</th>)}</tr>
+          </thead>
+          <tbody>
+            {TIERS.rows.map(r => (
+              <tr>
+                <th scope="row">{r.label[lang]}</th>
+                {r.v.map(v => <td class={'g-' + v}>{TIERS.values[v][lang]}</td>)}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="tier-src">{S.tierSrc(KIT.version)}</p>
+      <ul class="bullets">
+        {[S.pinned, S.keypair].map(([b, t]) => (
+          <li><span class="marker" aria-hidden="true">[*]</span><p class="bullet-p"><strong>{b}</strong> <Fragment set:html={t} /></p></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section two-col" aria-labelledby="eco-h">
+    <div class="lab">
+      <p class="sec-no">§ 05</p>
+      <h2 id="eco-h" class="h2">{S.ecoH}</h2>
+      <p class="intro">{S.ecoIntro}</p>
+    </div>
+    <div class="body eco">
+      <ul class="chips">
+        {ecosystem.map(m => <li><a class="chip-link" href={pagePath('skills', m.pack)}>{m.name}</a></li>)}
+      </ul>
+      <a class="arrow-link" href="/skills">{S.allPacks(c.packs)} →</a>
+    </div>
+  </section>
+
+  <section class="section two-col" aria-labelledby="faq-h">
+    <div class="lab"><p class="sec-no">§ 06</p><h2 id="faq-h" class="h2">{S.faqH}</h2></div>
+    <div class="body faq">
+      {faq.map(([q, a]) => (
+        <details>
+          <summary>{q}<span class="plus plus-t" aria-hidden="true"></span></summary>
+          <p class="faq-a" set:html={a} />
+        </details>
+      ))}
+    </div>
+  </section>
+</Base>

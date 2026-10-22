@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/classical-b0c6d1fc-992f-48a2-a6e8-c8b1280345f0/styles.css">
+<script src="_ds/classical-b0c6d1fc-992f-48a2-a6e8-c8b1280345f0/_ds_bundle.js"></script>
+</helmet>
+<sc-if value="{{ isMenu }}" hint-placeholder-val="{{ true }}">
+  <details style="position:relative">
+    <summary aria-label="{{ aria }}" style="cursor:pointer;display:flex;gap:6px;align-items:center;font-family:var(--mono);font-size:13px;line-height:1;padding:8px 9px;border:1px solid var(--color-divider);border-radius:var(--radius-md);color:var(--color-text)" style-hover="border-color:var(--line-strong)">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+      <span>{{ currentCode }}</span>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+    </summary>
+    <ul style="position:absolute;right:0;top:calc(100% + 6px);min-width:232px;margin:0;padding:6px;list-style:none;background:var(--color-surface);border:1px solid var(--color-divider);border-radius:var(--radius-md);box-shadow:var(--shadow-md);z-index:40">
+      <sc-for list="{{ locales }}" as="l" hint-placeholder-count="8">
+        <li>
+          <sc-if value="{{ l.live }}" hint-placeholder-val="{{ true }}">
+            <a href="{{ l.href }}" hreflang="{{ l.hreflang }}" lang="{{ l.hreflang }}" aria-current="{{ l.current }}" style="display:flex;justify-content:space-between;align-items:center;gap:16px;padding:8px 10px;border-radius:var(--radius-sm);text-decoration:none;color:var(--color-text);font-size:14px" style-hover="background:color-mix(in srgb,var(--color-text) 8%,transparent)">
+              <span style="display:flex;gap:8px;align-items:center"><span aria-hidden="true" style="width:10px;font-family:var(--mono);color:var(--color-accent)">{{ l.mark }}</span>{{ l.label }}</span>
+              <span style="font-family:var(--mono);font-size:12px;color:var(--muted)">{{ l.path }}</span>
+            </a>
+          </sc-if>
+          <sc-if value="{{ l.planned }}" hint-placeholder-val="{{ false }}">
+            <span aria-disabled="true" lang="{{ l.hreflang }}" style="display:flex;justify-content:space-between;align-items:center;gap:16px;padding:8px 10px;font-size:14px;color:var(--muted)">
+              <span style="display:flex;gap:8px;align-items:center"><span style="width:10px"></span>{{ l.label }}</span>
+              <span style="font-family:var(--mono);font-size:12px">{{ l.path }} · {{ plannedLabel }}</span>
+            </span>
+          </sc-if>
+        </li>
+      </sc-for>
+    </ul>
+  </details>
+</sc-if>
+<sc-if value="{{ isList }}" hint-placeholder-val="{{ false }}">
+  <ul aria-label="{{ aria }}" style="display:flex;flex-wrap:wrap;gap:6px 20px;margin:0;padding:0;list-style:none;font-size:14px">
+    <sc-for list="{{ locales }}" as="l" hint-placeholder-count="8">
+      <li style="display:flex;gap:6px;align-items:baseline">
+        <sc-if value="{{ l.live }}" hint-placeholder-val="{{ true }}">
+          <a href="{{ l.href }}" hreflang="{{ l.hreflang }}" lang="{{ l.hreflang }}" aria-current="{{ l.current }}" style="color:var(--color-text);text-decoration:none" style-hover="color:var(--ink-accent)">{{ l.label }}</a>
+        </sc-if>
+        <sc-if value="{{ l.planned }}" hint-placeholder-val="{{ false }}">
+          <span lang="{{ l.hreflang }}" style="color:var(--muted)">{{ l.label }}</span>
+        </sc-if>
+        <span style="font-family:var(--mono);font-size:11px;color:var(--muted)">{{ l.path }}</span>
+      </li>
+    </sc-for>
+  </ul>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:320,&quot;height&quot;:360},&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;en&quot;,&quot;br&quot;],&quot;default&quot;:&quot;en&quot;,&quot;tsType&quot;:&quot;'en'|'br'&quot;},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;menu&quot;,&quot;list&quot;],&quot;default&quot;:&quot;menu&quot;,&quot;tsType&quot;:&quot;'menu'|'list'&quot;}}">
+const LOCALES = [
+  ['en', '/', 'English', 'en', 'Home.dc.html'], ['br', '/br', 'Português (Brasil)', 'pt-BR', 'Home pt-BR.dc.html'],
+  ['es', '/es', 'Español', 'es'], ['zh', '/zh', '中文', 'zh-Hans'], ['ja', '/ja', '日本語', 'ja'],
+  ['ko', '/ko', '한국어', 'ko'], ['tr', '/tr', 'Türkçe', 'tr'], ['vi', '/vi', 'Tiếng Việt', 'vi']
+];
+class Component extends DCLogic {
+  renderVals() {
+    const lang = this.props.lang || 'en';
+    const br = lang === 'br';
+    const locales = LOCALES.map(([code, path, label, hreflang, href]) => ({
+      code, path, label, hreflang, href, live: !!href, planned: !href,
+      current: code === lang ? 'true' : undefined, mark: code === lang ? '›' : ''
+    }));
+    return {
+      locales, isMenu: this.props.variant !== 'list', isList: this.props.variant === 'list',
+      currentCode: br ? 'PT-BR' : 'EN', aria: br ? 'Idioma' : 'Language', plannedLabel: br ? 'em breve' : 'planned'
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+---
+import Icon from './Icon.astro';
+import LangSwitch from './LangSwitch.astro';
+import Wordmark from './Wordmark.astro';
+import { KIT } from '../lib/data';
+import { UI } from '../lib/i18n';
+import { REPO, type Lang } from '../lib/site';
+
+interface Props { lang?: Lang; active?: 'home' | 'skills' | 'agents' | 'commands'; langPaths?: Partial<Record<string, string>> }
+const { lang = 'en', active = 'home', langPaths } = Astro.props;
+const t = UI[lang];
+const links = [
+  { key: 'skills', label: t.nav.skills, href: '/skills' },
+  { key: 'agents', label: t.nav.agents, href: '/agents' },
+  { key: 'commands', label: t.nav.commands, href: '/commands' },
+  { key: 'docs', label: t.nav.docs, href: `${REPO}#readme` }
+];
+const stars = KIT.stars;
+const starsText = stars == null ? '⟨stars⟩' : new Intl.NumberFormat('en', { notation: 'compact' }).format(stars);
+const home = lang === 'br' ? '/br' : '/';
+---
+<div class="side-lines" aria-hidden="true"></div>
+<header class="topbar">
+  <div class="topbar-in">
+    <a href={home} class="brand" aria-label="Solana AI Kit home"><Wordmark /></a>
+    <nav class="nav-links" aria-label="Primary">
+      {links.map(l => <a href={l.href} aria-current={active === l.key ? 'page' : undefined}>{l.label}</a>)}
+    </nav>
+    <div class="nav-tools">
+      <a class="gh-link" href={REPO}>
+        <Icon name="github" />
+        <span>GitHub</span>
+        <span class={'star-badge' + (stars == null ? ' ph' : '')} title={t.starsTitle}>★ {starsText}</span>
+      </a>
+      <LangSwitch lang={lang} paths={langPaths} />
+      <button type="button" class="btn btn-secondary btn-icon icon-btn" data-theme-toggle aria-label={t.theme} title={t.theme}>
+        <span class="theme-icon-dark"><Icon name="sun" /></span><span class="theme-icon-light"><Icon name="moon" /></span>
+      </button>
+    </div>
+    <div class="nav-narrow">
+      <a href={REPO} class={'star-badge' + (stars == null ? ' ph' : '')} title={t.starsTitle}>★ {starsText}</a>
+      <button type="button" class="btn btn-secondary btn-icon icon-btn" data-menu-toggle aria-expanded="false" aria-controls="mobile-menu" aria-label={t.menu}>
+        <span data-menu-closed><Icon name="menu" size={20} /></span><span data-menu-open hidden><Icon name="x" size={20} /></span>
+      </button>
+    </div>
+  </div>
+  <div id="mobile-menu" class="mobile-menu" hidden>
+    {links.map(l => <a href={l.href} aria-current={active === l.key ? 'page' : undefined}>{l.label}</a>)}
+    <a href={REPO}>GitHub</a>
+    <div class="mobile-menu-row">
+      <LangSwitch lang={lang} paths={langPaths} />
+      <button type="button" class="btn btn-secondary" data-theme-toggle style="font-family:var(--mono);font-size:13px;font-weight:400;min-height:44px;color:var(--color-text)">{t.theme}</button>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,35 @@
+---
+// Tabbed command box with one copy button for the visible tab. Every tab's
+// panel is in the HTML; script.ts only switches which one is shown.
+import Icon from './Icon.astro';
+import { UI } from '../lib/i18n';
+import type { Lang } from '../lib/site';
+
+export interface InstallTab { label: string; caption?: string; prompt?: boolean; lines: string[] }
+interface Props { tabs: InstallTab[]; note?: string; lang?: Lang; ariaLabel?: string; id: string }
+const { tabs, note, lang = 'en', ariaLabel, id } = Astro.props;
+const t = UI[lang];
+---
+<div class="box" data-tabs data-copy-scope>
+  <div class="tablist" role="tablist" aria-label={ariaLabel || t.installMethod}>
+    {tabs.map((tab, i) => (
+      <button type="button" class="tab" role="tab" id={`${id}-tab-${i}`} aria-controls={`${id}-panel-${i}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{tab.label}</button>
+    ))}
+  </div>
+  <div class="box-row">
+    {tabs.map((tab, i) => (
+      <div class="box-panel" role="tabpanel" id={`${id}-panel-${i}`} aria-labelledby={`${id}-tab-${i}`} hidden={i !== 0} data-copy-text={tab.lines.join('\n')}>
+        {tab.caption && <div class="box-cap">{tab.caption}</div>}
+        {tab.lines.map(l => (
+          <div class="box-line"><span class="pfx" aria-hidden="true">{tab.prompt ? '›' : '$'}</span><code>{l}</code></div>
+        ))}
+      </div>
+    ))}
+    <button type="button" class="btn btn-secondary copy-btn" data-copy data-copy-label={t.copy} data-copied-label={t.copied}>
+      <Icon name="copy" size={14} class="ico" />
+      <svg class="ok" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ink-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
+      <span aria-live="polite" data-copy-status>{t.copy}</span>
+    </button>
+  </div>
+  {note && <div class="box-note">{note}</div>}
+</div>

@@ -1,0 +1,66 @@
+---
+import '../styles/ds.css';
+import '../styles/site.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { SITE, type Lang } from '../lib/site';
+
+interface Props {
+  title: string;
+  description: string;
+  lang?: Lang;
+  active?: 'home' | 'skills' | 'agents' | 'commands';
+  /** Path of this page's Markdown twin, e.g. /skills/jupiter.md */
+  md: string;
+  /** This page's path per live locale; only listed locales get hreflang. */
+  alternates?: Partial<Record<'en' | 'br', string>>;
+}
+const { title, description, lang = 'en', active = 'home', md, alternates = {} } = Astro.props;
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const canonical = SITE + path;
+const hreflang = { en: 'en', br: 'pt-BR' } as const;
+const alts = Object.entries(alternates) as ['en' | 'br', string][];
+const langPaths = Object.fromEntries(alts);
+---
+<!doctype html>
+<html lang={lang === 'br' ? 'pt-BR' : 'en'} data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <link rel="alternate" type="text/markdown" href={SITE + md} />
+  {alts.length > 1 && alts.map(([l, p]) => <link rel="alternate" hreflang={hreflang[l]} href={SITE + p} />)}
+  {alts.length > 1 && alternates.en && <link rel="alternate" hreflang="x-default" href={SITE + alternates.en} />}
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#0a0d0b" />
+  <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+  <link rel="preload" href="/fonts/vt323-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" />
+  <script is:inline>
+    // Set the theme before first paint. Dark is the brand default.
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('aikit-theme'); } catch (e) {}
+      document.documentElement.dataset.theme = t === 'light' ? 'light' : 'dark';
+      document.documentElement.classList.add('js');
+    })();
+  </script>
+</head>
+<body>
+  <Nav lang={lang} active={active} langPaths={langPaths} />
+  <main class="container">
+    <slot />
+  </main>
+  <Footer lang={lang} langPaths={langPaths} />
+  <script>
+    import '../scripts/site.ts';
+  </script>
+</body>
+</html>

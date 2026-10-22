@@ -1,0 +1,25 @@
+---
+// Facts about one item. A missing value renders as a dashed ⟨field⟩
+// placeholder, never an invented value.
+export interface Fact { k: string; v: string | null; href?: string; copy?: string; ph?: string; text?: boolean }
+interface Props { facts: Fact[]; title?: string }
+const { facts, title = 'Facts' } = Astro.props;
+---
+<aside class="facts" aria-label={title}>
+  <h2 class="label-caps">{title}</h2>
+  <dl>
+    {facts.map(f => (
+      <div>
+        <dt>{f.k}</dt>
+        <dd>
+          {f.v == null
+            ? <span class="ph" title="Placeholder">⟨{f.ph || f.k}⟩</span>
+            : f.href ? <a href={f.href}>{f.v}</a>
+            : f.text ? <span>{f.v}</span>
+            : <code>{f.v}</code>}
+          {f.copy && <button type="button" class="mini-copy" data-copy data-copy-text={f.copy} data-copy-label="copy" data-copied-label="copied" aria-label={`Copy ${f.k}`}><span aria-live="polite" data-copy-status>copy</span></button>}
+        </dd>
+      </div>
+    ))}
+  </dl>
+</aside>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/classical-b0c6d1fc-992f-48a2-a6e8-c8b1280345f0/styles.css">
+<script src="_ds/classical-b0c6d1fc-992f-48a2-a6e8-c8b1280345f0/_ds_bundle.js"></script>
+</helmet>
+<div style="border:1px solid var(--line-strong);border-radius:var(--radius-md);background:var(--color-surface);text-align:left">
+  <div role="tablist" aria-label="{{ ariaLabel }}" style="display:flex;flex-wrap:wrap;gap:0 4px;padding:0 8px;border-bottom:1px solid var(--color-divider)">
+    <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="4">
+      <button type="button" role="tab" aria-selected="{{ t.sel }}" onClick="{{ t.pick }}" style="font-family:var(--mono);font-size:13px;line-height:1.2;padding:9px 10px 7px;background:transparent;border:0;border-bottom:2px solid {{ t.bar }};margin-bottom:-1px;color:{{ t.color }};cursor:pointer;min-height:40px" style-hover="color:var(--color-text)">{{ t.label }}</button>
+    </sc-for>
+  </div>
+  <div style="display:flex;gap:16px;align-items:flex-start;padding:14px clamp(12px,2vw,20px) 16px">
+    <div role="tabpanel" style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;font-family:var(--mono);font-size:13.5px;line-height:1.45">
+      <sc-if value="{{ hasCaption }}" hint-placeholder-val="{{ false }}">
+        <div style="font-size:12px;color:var(--muted);margin-bottom:2px">{{ caption }}</div>
+      </sc-if>
+      <sc-for list="{{ lines }}" as="l" hint-placeholder-count="1">
+        <div style="display:flex;gap:12px">
+          <span aria-hidden="true" style="color:var(--color-accent);user-select:none;flex:none">{{ l.pfx }}</span>
+          <code style="font-family:inherit;color:var(--color-text);white-space:pre-wrap;overflow-wrap:anywhere">{{ l.text }}</code>
+        </div>
+      </sc-for>
+    </div>
+    <button type="button" class="btn btn-secondary" onClick="{{ copy }}" style="flex:none;font-family:var(--mono);font-size:12px;font-weight:400;min-height:36px;color:var(--color-text)">
+      <sc-if value="{{ notCopied }}" hint-placeholder-val="{{ true }}">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+      </sc-if>
+      <sc-if value="{{ copied }}" hint-placeholder-val="{{ false }}">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ink-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
+      </sc-if>
+      <span aria-live="polite">{{ copyText }}</span>
+    </button>
+  </div>
+  <sc-if value="{{ hasNote }}" hint-placeholder-val="{{ true }}">
+    <div style="border-top:1px solid var(--color-divider);padding:10px clamp(12px,2vw,20px);font-family:var(--mono);font-size:12px;color:var(--muted)">{{ note }}</div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:720,&quot;height&quot;:200},&quot;tabs&quot;:{&quot;editor&quot;:null,&quot;default&quot;:[{&quot;label&quot;:&quot;curl&quot;,&quot;lines&quot;:[{&quot;t&quot;:&quot;curl -fsSL https://aikit.superteam.codes | bash&quot;}]}],&quot;tsType&quot;:&quot;{label:string;caption?:string;prompt?:boolean;lines:{t:string}[]}[]&quot;},&quot;note&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Run it from your project's root.&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;en&quot;,&quot;br&quot;],&quot;default&quot;:&quot;en&quot;,&quot;tsType&quot;:&quot;'en'|'br'&quot;},&quot;ariaLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { tab: 0, copied: false };
+  componentWillUnmount() { clearTimeout(this.tm); }
+  copy = () => {
+    const t = (this.props.tabs || [])[this.state.tab];
+    if (!t) return;
+    const text = t.lines.map(l => l.t).join('\n');
+    try { navigator.clipboard.writeText(text).catch(() => {}); } catch (e) {}
+    this.setState({ copied: true });
+    clearTimeout(this.tm);
+    this.tm = setTimeout(() => this.setState({ copied: false }), 1800);
+  };
+  renderVals() {
+    const tabs = this.props.tabs || [];
+    const i = Math.max(0, Math.min(this.state.tab, tabs.length - 1));
+    const cur = tabs[i] || { lines: [] };
+    const br = this.props.lang === 'br';
+    return {
+      tabs: tabs.map((t, j) => ({
+        label: t.label, sel: j === i ? 'true' : 'false',
+        bar: j === i ? 'var(--color-accent)' : 'transparent', color: j === i ? 'var(--color-text)' : 'var(--muted)',
+        pick: () => this.setState({ tab: j, copied: false })
+      })),
+      lines: cur.lines.map(l => ({ text: l.t, pfx: cur.prompt ? '›' : '$' })),
+      caption: cur.caption, hasCaption: !!cur.caption,
+      copied: this.state.copied, notCopied: !this.state.copied, copy: this.copy,
+      copyText: this.state.copied ? (br ? 'Copiado' : 'Copied') : (br ? 'Copiar' : 'Copy'),
+      note: this.props.note, hasNote: !!this.props.note,
+      ariaLabel: this.props.ariaLabel || (br ? 'Forma de instalação' : 'Install method')
+    };
+  }
+}
+</script>
+</body>
+</html>

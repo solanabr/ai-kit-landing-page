@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/classical-b0c6d1fc-992f-48a2-a6e8-c8b1280345f0/styles.css">
+<script src="_ds/classical-b0c6d1fc-992f-48a2-a6e8-c8b1280345f0/_ds_bundle.js"></script>
+</helmet>
+<figure style="margin:0;border:1px solid var(--line-strong);border-radius:var(--radius-md);background:var(--color-surface);overflow:hidden;text-align:left">
+  <div style="display:flex;justify-content:space-between;align-items:stretch;gap:8px;flex-wrap:wrap;padding:0 8px;border-bottom:1px solid var(--color-divider)">
+    <div role="tablist" aria-label="{{ ariaLabel }}" style="display:flex;flex-wrap:wrap;gap:0 4px">
+      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3">
+        <button type="button" role="tab" aria-selected="{{ t.sel }}" onClick="{{ t.pick }}" style="font-family:var(--mono);font-size:13px;padding:9px 10px 7px;min-height:40px;background:transparent;border:0;border-bottom:2px solid {{ t.bar }};margin-bottom:-1px;color:{{ t.color }};cursor:pointer" style-hover="color:var(--color-text)">{{ t.label }}</button>
+      </sc-for>
+    </div>
+    <button type="button" class="btn btn-ghost" onClick="{{ replay }}" style="font-family:var(--mono);font-size:12px;font-weight:400;color:var(--ink-accent);align-self:center;padding:8px 10px">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+      {{ replayLabel }}
+    </button>
+  </div>
+  <div role="tabpanel" style="padding:14px clamp(12px,2vw,20px) 16px;font-family:var(--mono);font-size:13.5px;line-height:1.45;min-height:250px">
+    <sc-for list="{{ lines }}" as="l" hint-placeholder-count="9">
+      <sc-if value="{{ l.row }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;gap:12px;opacity:{{ l.op }};padding-left:{{ l.indent }}">
+          <span aria-hidden="true" style="flex:none;width:1.4ch;color:{{ l.markColor }}">{{ l.mark }}</span>
+          <span style="min-width:0;white-space:pre-wrap;overflow-wrap:anywhere"><span style="color:var(--ink-accent)">{{ l.a }}</span><span style="color:var(--color-text)">{{ l.b }}</span><span style="color:var(--muted)">{{ l.c }}</span><span aria-hidden="true" style="color:var(--color-accent)">{{ l.caret }}</span></span>
+        </div>
+      </sc-if>
+      <sc-if value="{{ l.fw }}" hint-placeholder-val="{{ false }}">
+        <div style="opacity:{{ l.op }};margin:12px 0 8px clamp(0px,3vw,26px);border:1px solid var(--color-accent);border-radius:var(--radius-md);padding:14px 16px;max-width:640px;display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;gap:8px;align-items:center;color:var(--ink-accent)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
+            <span>{{ l.title }}</span>
+          </div>
+          <div style="color:var(--color-text)">{{ l.text }}</div>
+          <div style="display:flex;flex-direction:column;gap:2px">
+            <sc-for list="{{ l.rows }}" as="r" hint-placeholder-count="3">
+              <div style="display:flex;gap:12px;flex-wrap:wrap"><span style="color:var(--muted);min-width:9ch">{{ r.k }}</span><span style="color:var(--color-text);overflow-wrap:anywhere">{{ r.v }}</span></div>
+            </sc-for>
+          </div>
+          <div style="display:flex;gap:6px 20px;flex-wrap:wrap;padding-top:8px;border-top:1px solid var(--color-divider)">
+            <sc-for list="{{ l.actions }}" as="a" hint-placeholder-count="3">
+              <span><span style="color:var(--ink-accent)">[{{ a.k }}]</span> {{ a.v }}</span>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+    </sc-for>
+  </div>
+  <figcaption style="margin:0;padding:10px clamp(14px,2.4vw,24px);border-top:1px solid var(--color-divider);font-family:var(--mono);font-size:12px;color:var(--muted)">{{ caption }}</figcaption>
+</figure>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1000,&quot;height&quot;:580},&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;en&quot;,&quot;br&quot;],&quot;default&quot;:&quot;en&quot;,&quot;tsType&quot;:&quot;'en'|'br'&quot;},&quot;autoplay&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+const T = {
+  en: {
+    labels: { agent: 'Agent', skill: 'Skill', tool: 'Tool', result: 'Result', next: 'Next' }, pad: 8,
+    caption: 'A Claude Code session rendered as text, so it can be translated and indexed. Paths and findings are illustrative.',
+    replay: 'Replay', aria: 'Demo commands',
+    plan: [
+      ['cmd', '/plan-feature add a staking vault with a 7-day lockup'],
+      ['step', 'agent', 'solana-architect', 'chosen for program design'],
+      ['step', 'skill', 'solana-dev › anchor', 'read'],
+      ['step', 'tool', 'solana-dev.search_docs("stake lockup")', ''],
+      ['out', 'returned 3 docs pages'],
+      ['step', 'result', 'Plan written to docs/plans/staking-vault.md', ''],
+      ['li', '1  Accounts: Vault PDA ["vault", authority], UserStake PDA'],
+      ['li', '2  Instructions: initialize, deposit, request_unlock, withdraw'],
+      ['li', '3  Tests: LiteSVM cases for the lockup boundary and early withdraw'],
+      ['step', 'next', 'anchor-engineer', 'via /build-program']
+    ],
+    audit: [
+      ['cmd', '/audit-solana programs/vault'],
+      ['step', 'agent', 'solana-qa-engineer', 'chosen for security review'],
+      ['step', 'skill', 'solana-dev › security', 'read'],
+      ['step', 'tool', 'Grep "Signer|has_one|checked_" programs/vault/src', ''],
+      ['out', '14 matches in 3 files'],
+      ['step', 'result', '3 findings, report at audits/vault.md', ''],
+      ['li', 'high    withdraw: authority is not checked as a signer   lib.rs:88'],
+      ['li', 'medium  deposit: unchecked add on amount                 lib.rs:54'],
+      ['li', 'low     UserStake has no close constraint                state.rs:21'],
+      ['step', 'next', 'anchor-engineer', 'fix, then /test-rust']
+    ],
+    deploy: [
+      ['cmd', '/deploy --cluster mainnet-beta'],
+      ['step', 'agent', 'devops-engineer', 'chosen for deploys'],
+      ['step', 'skill', 'solana-dev › deploy', 'read'],
+      ['step', 'tool', 'Bash  anchor build --verifiable', ''],
+      ['out', 'built target/deploy/vault.so'],
+      ['step', 'tool', 'Bash  solana program deploy target/deploy/vault.so --url mainnet-beta', ''],
+      ['fw', { title: 'Firewall · Medium · paused', text: 'This deploys to mainnet-beta. Confirm to continue.', rows: [['Program', 'target/deploy/vault.so'], ['Cluster', 'mainnet-beta'], ['Signer', '~/.config/solana/id.json (path only, contents not read)']], actions: [['y', 'deploy'], ['n', 'cancel'], ['d', 'show full command']] }],
+      ['wait', 'Waiting for your confirmation']
+    ]
+  },
+  br: {
+    labels: { agent: 'Agente', skill: 'Skill', tool: 'Ferramenta', result: 'Resultado', next: 'Próximo' }, pad: 11,
+    caption: 'Uma sessão do Claude Code em texto, para poder ser traduzida e indexada. Caminhos e achados são ilustrativos.',
+    replay: 'Repetir', aria: 'Comandos de demonstração',
+    plan: [
+      ['cmd', '/plan-feature adicionar um vault de staking com lockup de 7 dias'],
+      ['step', 'agent', 'solana-architect', 'escolhido para o design do programa'],
+      ['step', 'skill', 'solana-dev › anchor', 'lida'],
+      ['step', 'tool', 'solana-dev.search_docs("stake lockup")', ''],
+      ['out', 'retornou 3 páginas da documentação'],
+      ['step', 'result', 'Plano salvo em docs/plans/staking-vault.md', ''],
+      ['li', '1  Contas: PDA Vault ["vault", authority], PDA UserStake'],
+      ['li', '2  Instruções: initialize, deposit, request_unlock, withdraw'],
+      ['li', '3  Testes: casos LiteSVM para o limite do lockup e o saque antecipado'],
+      ['step', 'next', 'anchor-engineer', 'via /build-program']
+    ],
+    audit: [
+      ['cmd', '/audit-solana programs/vault'],
+      ['step', 'agent', 'solana-qa-engineer', 'escolhido para a revisão de segurança'],
+      ['step', 'skill', 'solana-dev › security', 'lida'],
+      ['step', 'tool', 'Grep "Signer|has_one|checked_" programs/vault/src', ''],
+      ['out', '14 ocorrências em 3 arquivos'],
+      ['step', 'result', '3 achados, relatório em audits/vault.md', ''],
+      ['li', 'alta    withdraw: authority não é verificada como signer   lib.rs:88'],
+      ['li', 'média   deposit: soma sem verificação em amount            lib.rs:54'],
+      ['li', 'baixa   UserStake não tem restrição close                  state.rs:21'],
+      ['step', 'next', 'anchor-engineer', 'corrigir e depois /test-rust']
+    ],
+    deploy: [
+      ['cmd', '/deploy --cluster mainnet-beta'],
+      ['step', 'agent', 'devops-engineer', 'escolhido para deploys'],
+      ['step', 'skill', 'solana-dev › deploy', 'lida'],
+      ['step', 'tool', 'Bash  anchor build --verifiable', ''],
+      ['out', 'gerado target/deploy/vault.so'],
+      ['step', 'tool', 'Bash  solana program deploy target/deploy/vault.so --url mainnet-beta', ''],
+      ['fw', { title: 'Firewall · Medium · pausado', text: 'Isto faz deploy na mainnet-beta. Confirme para continuar.', rows: [['Programa', 'target/deploy/vault.so'], ['Cluster', 'mainnet-beta'], ['Assinante', '~/.config/solana/id.json (só o caminho; o conteúdo não é lido)']], actions: [['y', 'fazer deploy'], ['n', 'cancelar'], ['d', 'ver o comando completo']] }],
+      ['wait', 'Aguardando sua confirmação']
+    ]
+  }
+};
+const TABS = [['plan', '/plan-feature'], ['audit', '/audit-solana'], ['deploy', '/deploy']];
+class Component extends DCLogic {
+  state = { tab: 0, typed: 999, revealed: 99 };
+  componentDidMount() { this.start(); }
+  componentWillUnmount() { clearInterval(this.iv); }
+  componentDidUpdate(p) { if (p.lang !== this.props.lang || p.autoplay !== this.props.autoplay) this.start(); }
+  strings() { return T[this.props.lang === 'br' ? 'br' : 'en']; }
+  cur() { return this.strings()[TABS[this.state.tab][0]]; }
+  start = () => {
+    clearInterval(this.iv);
+    const lines = this.cur();
+    const len = lines[0][1].length;
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || this.props.autoplay === false) { this.setState({ typed: len, revealed: lines.length }); return; }
+    this.setState({ typed: 0, revealed: 0 });
+    let tick = 0;
+    this.iv = setInterval(() => {
+      const s = this.state;
+      if (s.typed < len) this.setState({ typed: s.typed + 1 });
+      else if (s.revealed < lines.length) { tick++; if (tick % 12 === 0) this.setState({ revealed: s.revealed + 1 }); }
+      else clearInterval(this.iv);
+    }, 32);
+  };
+  renderVals() {
+    const S = this.strings();
+    const lines = this.cur();
+    const { typed, revealed } = this.state;
+    const typing = typed < lines[0][1].length;
+    const out = lines.map((l, i) => {
+      const op = i === 0 || i <= revealed ? 1 : 0;
+      const base = { row: true, fw: false, op, indent: '0px', a: '', b: '', c: '', caret: '', mark: '', markColor: 'var(--color-accent)' };
+      if (l[0] === 'cmd') return { ...base, mark: '>', b: l[1].slice(0, typed), caret: typing ? '▍' : '' };
+      if (l[0] === 'step') return { ...base, mark: '●', markColor: l[1] === 'tool' ? 'var(--muted)' : 'var(--color-accent)', a: S.labels[l[1]].padEnd(S.pad, ' '), b: l[2], c: l[3] ? '  ' + l[3] : '' };
+      if (l[0] === 'out') return { ...base, mark: '⎿', markColor: 'var(--muted)', indent: '22px', c: l[1] };
+      if (l[0] === 'li') return { ...base, indent: '22px', b: l[1] };
+      if (l[0] === 'wait') return { ...base, mark: '?', b: l[1], caret: i <= revealed ? ' ▍' : '' };
+      const f = l[1];
+      return { ...base, row: false, fw: true, title: f.title, text: f.text, rows: f.rows.map(([k, v]) => ({ k, v })), actions: f.actions.map(([k, v]) => ({ k, v })) };
+    });
+    return {
+      tabs: TABS.map(([, label], j) => ({
+        label, sel: j === this.state.tab ? 'true' : 'false',
+        bar: j === this.state.tab ? 'var(--color-accent)' : 'transparent', color: j === this.state.tab ? 'var(--color-text)' : 'var(--muted)',
+        pick: () => this.setState({ tab: j }, this.start)
+      })),
+      lines: out, caption: S.caption, replayLabel: S.replay, replay: this.start, ariaLabel: S.aria
+    };
+  }
+}
+</script>
+</body>
+</html>

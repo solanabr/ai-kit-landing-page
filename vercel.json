@@ -1,0 +1,21 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/",
+      "has": [{ "type": "header", "key": "user-agent", "value": "(?i)^(curl|wget)/.*" }],
+      "destination": "https://raw.githubusercontent.com/solanabr/ai-kit/main/install.sh",
+      "permanent": false
+    },
+    { "source": "/install.sh", "destination": "https://raw.githubusercontent.com/solanabr/ai-kit/main/install.sh", "permanent": false }
+  ],
+  "headers": [
+    { "source": "/(.*)\\.md", "headers": [{ "key": "Content-Type", "value": "text/markdown; charset=utf-8" }, { "key": "Access-Control-Allow-Origin", "value": "*" }] },
+    { "source": "/(llms|llms-full)\\.txt", "headers": [{ "key": "Content-Type", "value": "text/plain; charset=utf-8" }, { "key": "Access-Control-Allow-Origin", "value": "*" }] },
+    { "source": "/fonts/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] }
+  ]
+}

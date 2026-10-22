@@ -1,0 +1,7 @@
+---
+import Detail from '../../components/Detail.astro';
+import { cards } from '../../lib/data';
+export const getStaticPaths = () => cards('skills').map(c => ({ params: { id: c.id } }));
+const { id } = Astro.params;
+---
+<Detail kind="skills" id={id!} />

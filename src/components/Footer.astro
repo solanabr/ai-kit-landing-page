@@ -1,0 +1,46 @@
+---
+import LangSwitch from './LangSwitch.astro';
+import Wordmark from './Wordmark.astro';
+import { KIT } from '../lib/data';
+import { UI } from '../lib/i18n';
+import { REPO, type Lang } from '../lib/site';
+
+interface Props { lang?: Lang; langPaths?: Partial<Record<string, string>> }
+const { lang = 'en', langPaths } = Astro.props;
+const t = UI[lang];
+const cols = [
+  { title: t.footer.kit, links: [
+    { label: t.nav.skills, href: '/skills' }, { label: t.nav.agents, href: '/agents' },
+    { label: t.nav.commands, href: '/commands' }, { label: t.nav.docs, href: `${REPO}#readme` }] },
+  { title: t.footer.project, links: [
+    { label: 'GitHub', href: REPO }, { label: 'Releases', href: `${REPO}/tags` },
+    { label: 'Issues', href: `${REPO}/issues` }, { label: t.footer.licence, href: `${REPO}/blob/main/LICENSE` }] },
+  { title: t.footer.agents, links: [
+    { label: '/llms.txt', href: '/llms.txt' }, { label: '/llms-full.txt', href: '/llms-full.txt' },
+    { label: lang === 'br' ? '/br/index.md' : '/index.md', href: lang === 'br' ? '/br/index.md' : '/index.md' }] }
+];
+---
+<footer class="footer">
+  <div class="f-top">
+    <div class="f-brand">
+      <span style="display:flex"><Wordmark height={27} /></span>
+      <span>{t.footer.tagline}</span>
+    </div>
+    {cols.map(c => (
+      <nav class="f-col" aria-label={c.title}>
+        <h2 class="label-caps">{c.title}</h2>
+        {c.links.map(l => <a href={l.href}>{l.label}</a>)}
+      </nav>
+    ))}
+  </div>
+  <div class="f-langs">
+    <h2 class="label-caps">{t.languages}</h2>
+    <LangSwitch lang={lang} variant="list" paths={langPaths} />
+  </div>
+  <div class="f-bottom">
+    <span>{t.footer.licence}</span>
+    <span>{t.footer.builtBy}</span>
+    <span>v{KIT.version}</span>
+    <a href="/llms.txt">/llms.txt</a>
+  </div>
+</footer>

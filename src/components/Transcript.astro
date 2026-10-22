@@ -1,0 +1,45 @@
+---
+// The demo session as plain HTML text. Every line of every tab is in the DOM
+// from the start, so it is indexable and translatable; script.ts only reveals
+// them (typing the command, then fading lines in), and does nothing under
+// prefers-reduced-motion.
+import Icon from './Icon.astro';
+import { TRANSCRIPT } from '../lib/i18n';
+import type { Lang } from '../lib/site';
+
+interface Props { lang?: Lang }
+const { lang = 'en' } = Astro.props;
+const S = TRANSCRIPT[lang];
+const TABS = [['plan', '/plan-feature'], ['audit', '/audit-solana'], ['deploy', '/deploy']] as const;
+---
+<figure class="box transcript" data-tabs data-transcript>
+  <div class="transcript-head">
+    <div class="tablist" role="tablist" aria-label={S.aria}>
+      {TABS.map(([k, label], i) => (
+        <button type="button" class="tab" role="tab" id={`tr-tab-${k}`} aria-controls={`tr-panel-${k}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{label}</button>
+      ))}
+    </div>
+    <button type="button" class="btn btn-ghost replay" data-replay><Icon name="replay" size={13} stroke={2} />{S.replay}</button>
+  </div>
+  {TABS.map(([k], i) => (
+    <div class="t-body" role="tabpanel" id={`tr-panel-${k}`} aria-labelledby={`tr-tab-${k}`} hidden={i !== 0}>
+      {S.tabs[k].map(l => {
+        if (l[0] === 'cmd') return <div class="t-line" data-cmd><span class="t-mark" aria-hidden="true">&gt;</span><span class="t-text"><span class="t-b" data-type>{l[1]}</span><span class="t-caret" aria-hidden="true" data-caret></span></span></div>;
+        if (l[0] === 'step') return <div class="t-line" data-reveal><span class={'t-mark' + (l[1] === 'tool' ? ' mut' : '')} aria-hidden="true">●</span><span class="t-text"><span class="t-a">{S.labels[l[1]].padEnd(S.pad, ' ')}</span><span class="t-b">{l[2]}</span><span class="t-c">{l[3] ? '  ' + l[3] : ''}</span></span></div>;
+        if (l[0] === 'out') return <div class="t-line ind" data-reveal><span class="t-mark mut" aria-hidden="true">⎿</span><span class="t-text"><span class="t-c">{l[1]}</span></span></div>;
+        if (l[0] === 'li') return <div class="t-line ind" data-reveal><span class="t-mark" aria-hidden="true"></span><span class="t-text"><span class="t-b">{l[1]}</span></span></div>;
+        if (l[0] === 'wait') return <div class="t-line" data-reveal><span class="t-mark" aria-hidden="true">?</span><span class="t-text"><span class="t-b">{l[1]}</span><span class="t-caret" aria-hidden="true"> ▍</span></span></div>;
+        const f = l[1];
+        return (
+          <div class="t-fw" data-reveal role="note">
+            <div class="t-fw-title"><Icon name="shieldAlert" size={15} /><span>{f.title}</span></div>
+            <div class="t-b">{f.text}</div>
+            <div class="t-fw-rows">{f.rows.map(([a, b]) => <div><span>{a}</span><span>{b}</span></div>)}</div>
+            <div class="t-fw-acts">{f.actions.map(([a, b]) => <span><b>[{a}]</b> {b}</span>)}</div>
+          </div>
+        );
+      })}
+    </div>
+  ))}
+  <figcaption class="t-cap">{S.caption}</figcaption>
+</figure>
