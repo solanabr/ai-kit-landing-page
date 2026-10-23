@@ -47,6 +47,7 @@ const fmt = (v: unknown) => (typeof v === 'number' ? new Intl.NumberFormat(lang 
       <a class="btn btn-secondary" href={REPO}><Icon name="github" size={15} />{S.github}</a>
       <span class="small-muted">{S.noAccount}</span>
     </div>
+    <a class="hero-trust" href="#safe-h"><Icon name="shieldCheck" size={16} /><span><strong>{S.trust[0]}</strong> {S.trust[1]}</span></a>
     <div class="demo-wrap"><Transcript lang={lang} /></div>
   </section>
 
