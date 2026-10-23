@@ -5,7 +5,7 @@ import { INSTALL_HOST, type Lang } from './site';
 export const UI = {
   en: {
     nav: { skills: 'Skills', agents: 'Agents', commands: 'Commands', docs: 'Docs' },
-    theme: 'Toggle theme', menu: 'Menu', language: 'Language', languages: 'Languages', planned: 'planned',
+    theme: 'Toggle theme', menu: 'Menu', language: 'Language', languages: 'Languages',
     copy: 'Copy', copied: 'Copied', installMethod: 'Install method',
     starsTitle: 'GitHub stars, read from the GitHub API at build',
     md: { group: 'Markdown version', copy: 'Copy as Markdown', view: 'View .md', claude: 'Open in Claude', gpt: 'Open in ChatGPT', prompt: (u: string) => `Read ${u} and use it for this session` },
@@ -14,7 +14,7 @@ export const UI = {
   },
   br: {
     nav: { skills: 'Skills', agents: 'Agentes', commands: 'Comandos', docs: 'Docs' },
-    theme: 'Alternar tema', menu: 'Menu', language: 'Idioma', languages: 'Idiomas', planned: 'em breve',
+    theme: 'Alternar tema', menu: 'Menu', language: 'Idioma', languages: 'Idiomas',
     copy: 'Copiar', copied: 'Copiado', installMethod: 'Forma de instalação',
     starsTitle: 'Estrelas no GitHub, lidas da API do GitHub no build',
     md: { group: 'Versão em Markdown', copy: 'Copiar como Markdown', view: 'Ver .md', claude: 'Abrir no Claude', gpt: 'Abrir no ChatGPT', prompt: (u: string) => `Leia ${u} e use nesta sessão` },

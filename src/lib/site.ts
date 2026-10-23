@@ -9,8 +9,8 @@ export const INSTALL_HOST = 'https://aikit.superteam.codes';
 export type Lang = 'en' | 'br';
 export type Kind = 'skills' | 'agents' | 'commands';
 
-// Locales in their own language. Only those with `live: true` are built and
-// emitted as hreflang alternates; the rest are listed as planned.
+// Locales in their own language. Only those with `live: true` are built,
+// emitted as hreflang alternates and shown in the language menu.
 export const LOCALES = [
   { code: 'en', path: '/', label: 'English', hreflang: 'en', live: true },
   { code: 'br', path: '/br', label: 'Português (Brasil)', hreflang: 'pt-BR', live: true },
