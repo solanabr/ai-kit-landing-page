@@ -152,6 +152,19 @@ function lead(s) {
   return out.replace(/\$ARGUMENTS/g, 'the arguments');
 }
 
+// An agent file opens by addressing the model ("You implement Solana programs…"),
+// which on the site reads as addressed to the visitor. That opening sentence
+// restates the description shown above it, so drop it; keep the working rules
+// after it, with the remaining second person moved to the agent.
+const conj = v => (/(s|sh|ch|x|z|o)$/.test(v) ? v + 'es' : /[^aeiou]y$/.test(v) ? v.slice(0, -1) + 'ies' : v + 's');
+const agentRules = ss => ss
+  .filter((s, i) => !(i === 0 && /^You\b/.test(s)))
+  .map(s => s
+    .replace(/\byou ([a-z]+)\b/g, (_, v) => 'it ' + conj(v))
+    .replace(/\byour\b/g, 'its')
+    .replace(/ for you\b/g, '')
+    .replace(/\byou\b/g, 'the agent'));
+
 // --- registry ---------------------------------------------------------------
 const registry = JSON.parse(read('.claude/skills/skill-registry.json'));
 const pinned = registry.entries.filter(e => e.tier === 'core' || e.tier === 'extension');
@@ -190,7 +203,7 @@ const agents = agentIds.map(id => {
     id, file,
     description: data.description || '',
     model: data.model || 'inherit',
-    does: sentences(firstParagraph(sec._intro)).map(x => x.replace(/\$ARGUMENTS/g, 'the arguments')),
+    does: agentRules(sentences(firstParagraph(sec._intro)).map(x => x.replace(/\$ARGUMENTS/g, 'the arguments'))),
     handoffs: handoffs.length ? handoffs : mentionedAgents(body, id).map(to => ({ to, when: '' })),
     skills: extPacks(body),
     commands: mentionedCommands(body, id)

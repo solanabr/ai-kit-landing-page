@@ -17,7 +17,6 @@
       "description": "Implements Solana programs in Anchor 1.x: accounts, constraints, CPIs, errors, events, IDL and Rust LiteSVM tests. Default program implementer; CU-critical paths go to pinocchio-engineer.",
       "model": "opus",
       "does": [
-        "You implement Solana programs with Anchor 1.x (Solana 3.x / Agave toolchain).",
         "Lean on Anchor's constraint system instead of hand-written checks, and keep each instruction small enough to audit."
       ],
       "handoffs": [
@@ -54,7 +53,6 @@
       "description": "Integrates Solana DeFi protocols (Jupiter, Kamino, Marginfi, Raydium, Orca, Meteora, Sanctum, Pyth, Switchboard) via SDK, API or CPI. Token launches go to token-engineer.",
       "model": "opus",
       "does": [
-        "You integrate existing Solana DeFi protocols into apps and programs: off-chain through their SDKs and APIs, on-chain through CPI.",
         "Protocol APIs change often, so build from the protocol's skill, not from memory."
       ],
       "handoffs": [
@@ -97,7 +95,6 @@
       "description": "Owns CI/CD, toolchain pinning, RPC infrastructure, monitoring and Cloudflare Workers for Solana projects. Program deploys run through /deploy; service code goes to rust-backend-engineer.",
       "model": "sonnet",
       "does": [
-        "You set up CI/CD, RPC infrastructure, monitoring and edge services for Solana projects.",
         "Keep builds reproducible and keys where they cannot leak."
       ],
       "handoffs": [
@@ -128,9 +125,7 @@
       "file": ".claude/agents/game-architect.md",
       "description": "Designs Solana games before code: on-chain vs off-chain state, Unity architecture, economies, PSG1 targeting; writes concept.md and plan.md. Implementation goes to unity-engineer.",
       "model": "inherit",
-      "does": [
-        "You design Solana games (on-chain state, Unity structure, economy, platform) and hand implementation to the engineer agents."
-      ],
+      "does": [],
       "handoffs": [
         {
           "to": "unity-engineer",
@@ -164,7 +159,6 @@
       "description": "Builds Solana mobile apps in React Native/Expo: Mobile Wallet Adapter, Seeker features, deep links, dApp Store releases. Web frontends go to solana-frontend-engineer.",
       "model": "sonnet",
       "does": [
-        "You build Solana mobile apps with React Native and Expo, connecting wallets through Mobile Wallet Adapter (MWA) 2.0.",
         "The official Solana Mobile skills track the current templates and packages; prefer them over older snippets, including the game skill's."
       ],
       "handoffs": [
@@ -200,8 +194,7 @@
       "description": "Implements CU- or size-critical Solana programs and hot paths in Pinocchio (zero-copy, manual validation, Mollusk CU tests) when Anchor is the measured bottleneck.",
       "model": "inherit",
       "does": [
-        "You write Pinocchio programs: no macros, zero-copy state, every check explicit.",
-        "Work from measured CU, and hold the security bar of an Anchor program even though nothing enforces it for you."
+        "Work from measured CU, and hold the security bar of an Anchor program even though nothing enforces it."
       ],
       "handoffs": [
         {
@@ -240,7 +233,6 @@
       "description": "Builds Rust async services around Solana (APIs, indexers, webhook consumers, transaction senders) on Tokio/Axum. Programs go to anchor-engineer; infra to devops-engineer.",
       "model": "sonnet",
       "does": [
-        "You build Rust services that read from and write to Solana (APIs, indexers, webhook consumers, transaction senders) on Tokio and Axum.",
         "The hard part is data correctness under redelivery, forks and gaps, not the web framework."
       ],
       "handoffs": [
@@ -275,7 +267,6 @@
       "description": "Designs and reviews Solana systems before code: accounts, PDAs, program boundaries, CPIs, upgrade and trust model, economic security. Games go to game-architect.",
       "model": "inherit",
       "does": [
-        "You design Solana programs and multi-program systems and review existing ones.",
         "Settle the account model, trust boundaries and failure modes before code exists, so implementers never have to reopen them."
       ],
       "handoffs": [
@@ -332,7 +323,6 @@
       "description": "Builds Solana web frontends in React/Next.js on @solana/kit: wallet connection, transaction UX, token views, WCAG 2.2 AA. React Native goes to mobile-engineer.",
       "model": "sonnet",
       "does": [
-        "You build Solana web frontends in React and Next.js on @solana/kit.",
         "Design stance: calm, content-first UI (generous spacing, readable type, muted palette, restrained translucent surfaces), with motion only to explain state changes.",
         "Accessibility bar: WCAG 2.2 AA (4.5:1 text contrast, visible focus, full keyboard use, 24px minimum targets, reduced motion respected)."
       ],
@@ -374,9 +364,7 @@
       "file": ".claude/agents/solana-guide.md",
       "description": "Teaches Solana: explains concepts and existing code, writes tutorials and learning paths, mentors learners including EVM developers. Production code goes to engineer agents.",
       "model": "sonnet",
-      "does": [
-        "You teach Solana development so the learner can solve the next problem without you: explain why, not only what."
-      ],
+      "does": [],
       "handoffs": [
         {
           "to": "anchor-engineer",
@@ -406,9 +394,7 @@
       "file": ".claude/agents/solana-qa-engineer.md",
       "description": "Owns Solana test strategy and quality gates: Mollusk, LiteSVM, Surfpool and Trident suites, fuzzing, CU baselines, AI-slop cleanup. Implementers still unit-test their own code.",
       "model": "opus",
-      "does": [
-        "You own how Solana programs are tested and measured: pick the harness for each test, cover the failure paths, keep CU baselines honest, and strip AI slop from diffs before review."
-      ],
+      "does": [],
       "handoffs": [
         {
           "to": "anchor-engineer",
@@ -448,7 +434,6 @@
       "description": "Researches the Solana ecosystem with cited, dated sources: protocols, SDKs, APIs, tool versions, DeFi data, competitors. Design decisions go to solana-architect.",
       "model": "sonnet",
       "does": [
-        "You answer Solana ecosystem questions with current, cited evidence.",
         "The ecosystem moves faster than training data, so check versions, deployment status and dates instead of recalling them."
       ],
       "handoffs": [
@@ -477,8 +462,7 @@
       "description": "Writes developer docs for Solana projects: READMEs, instruction and account references, integration and deployment guides. Tutorials go to solana-guide.",
       "model": "sonnet",
       "does": [
-        "You write documentation for Solana programs and the apps around them.",
-        "Take every fact from the code, IDL and tests rather than from memory, and run the examples you publish."
+        "Take every fact from the code, IDL and tests rather than from memory, and run the examples it publishes."
       ],
       "handoffs": [
         {
@@ -506,7 +490,6 @@
       "description": "Builds tokens and digital assets: SPL and Token-2022 mints and extensions, transfer-hook programs, Metaplex NFTs, launches, tokenomics. Swaps and lending go to defi-engineer.",
       "model": "opus",
       "does": [
-        "You build token infrastructure: mint configuration, Token-2022 extensions and transfer-hook programs, NFT collections, and launch plans.",
         "Use the fewest extensions that meet the requirement, because each one narrows where the token can trade."
       ],
       "handoffs": [
@@ -542,9 +525,7 @@
       "file": ".claude/agents/unity-engineer.md",
       "description": "Implements Unity/C# for Solana games: Solana.Unity-SDK wallets, transactions, account reads, NFTs, UI, PSG1 input, Unity tests. Program changes go to anchor-engineer.",
       "model": "sonnet",
-      "does": [
-        "You implement Unity (C#) game code on Solana.Unity-SDK in small steps: edit, build, test. game-architect's concept.md and plan.md, when present, are your spec."
-      ],
+      "does": [],
       "handoffs": [
         {
           "to": "game-architect",

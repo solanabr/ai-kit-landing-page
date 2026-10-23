@@ -162,7 +162,7 @@ const metaDesc = description.length > 160 ? description.slice(0, 157).replace(/\
 
       {!isSkill && does.length > 0 && (
         <section aria-labelledby="does-h">
-          <h2 id="does-h" class="h3">What it does</h2>
+          <h2 id="does-h" class="h3">{kind === 'agents' ? 'Working rules' : 'What it does'}</h2>
           <ol class="does">{does.map((t, i) => <li><span>{String(i + 1).padStart(2, '0')}</span>{t}</li>)}</ol>
         </section>
       )}
