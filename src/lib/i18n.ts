@@ -136,8 +136,8 @@ export const TRANSCRIPT: Record<Lang, { labels: Record<string, string>; pad: num
         ['step', 'skill', 'deployment.md', 'read'],
         ['step', 'tool', 'Bash  solana-verify build', ''],
         ['out', 'built target/deploy/vault.so'],
-        ['step', 'tool', 'Bash  solana program deploy target/deploy/vault.so --url mainnet-beta', ''],
-        ['fw', { title: 'Firewall · Medium · paused', text: 'This deploys to mainnet-beta. Confirm to continue.', rows: [['Program', 'target/deploy/vault.so'], ['Cluster', 'mainnet-beta'], ['Signer', '~/.config/solana/id.json (path only, contents not read)']], actions: [['y', 'deploy'], ['n', 'cancel'], ['d', 'show full command']] }],
+        ['step', 'tool', 'Bash  solana program deploy target/deploy/vault.so --url mainnet-beta --keypair usb://ledger', ''],
+        ['fw', { title: 'Firewall · Medium · paused', text: 'This deploys to mainnet-beta. Confirm to continue.', rows: [['Program', 'target/deploy/vault.so'], ['Cluster', 'mainnet-beta'], ['Signer', 'usb://ledger (hardware wallet)'], ['Authority', 'this Ledger at launch; a Squads vault once stable']], actions: [['y', 'deploy'], ['n', 'cancel'], ['d', 'show full command']] }],
         ['wait', 'Waiting for your confirmation']
       ]
     }
@@ -177,8 +177,8 @@ export const TRANSCRIPT: Record<Lang, { labels: Record<string, string>; pad: num
         ['step', 'skill', 'deployment.md', 'lida'],
         ['step', 'tool', 'Bash  solana-verify build', ''],
         ['out', 'gerado target/deploy/vault.so'],
-        ['step', 'tool', 'Bash  solana program deploy target/deploy/vault.so --url mainnet-beta', ''],
-        ['fw', { title: 'Firewall · Medium · pausado', text: 'Isto faz deploy na mainnet-beta. Confirme para continuar.', rows: [['Programa', 'target/deploy/vault.so'], ['Cluster', 'mainnet-beta'], ['Assinante', '~/.config/solana/id.json (só o caminho; o conteúdo não é lido)']], actions: [['y', 'fazer deploy'], ['n', 'cancelar'], ['d', 'ver o comando completo']] }],
+        ['step', 'tool', 'Bash  solana program deploy target/deploy/vault.so --url mainnet-beta --keypair usb://ledger', ''],
+        ['fw', { title: 'Firewall · Medium · pausado', text: 'Isto faz deploy na mainnet-beta. Confirme para continuar.', rows: [['Programa', 'target/deploy/vault.so'], ['Cluster', 'mainnet-beta'], ['Assinante', 'usb://ledger (carteira de hardware)'], ['Autoridade', 'este Ledger no lançamento; um vault Squads quando estável']], actions: [['y', 'fazer deploy'], ['n', 'cancelar'], ['d', 'ver o comando completo']] }],
         ['wait', 'Aguardando sua confirmação']
       ]
     }
