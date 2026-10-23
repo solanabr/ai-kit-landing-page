@@ -10,7 +10,7 @@ import InstallBox, { type InstallTab } from './InstallBox.astro';
 import LangSwitch from './LangSwitch.astro';
 import MdControls from './MdControls.astro';
 import {
-  KIT, agent, command, editUrl, fileUrl, invokeLine, itemMarkdown, mdUrl, pack, packTags, pagePath, related, safetyParts, shortSha
+  KIT, agent, command, editUrl, fileUrl, invokeLine, itemMarkdown, mdUrl, modelLabel, modelTitle, pack, packTags, pagePath, related, safetyParts, shortSha
 } from '../lib/data';
 import type { Kind } from '../lib/site';
 
@@ -67,7 +67,7 @@ if (isSkill) {
     { label: 'Commands', items: a.commands.map(c => link('commands', c)) }
   ].filter(g => g.items.length);
   facts = [
-    { k: 'Model', v: a.model }, { k: 'File', v: a.file, href: fileUrl(a.file) },
+    { k: 'Model', v: a.model === 'inherit' ? 'Same as your session (inherit)' : a.model }, { k: 'File', v: a.file, href: fileUrl(a.file) },
     { k: 'Licence', v: 'MIT' }, { k: 'Kit version', v: KIT.version }
   ];
 } else {
@@ -80,7 +80,7 @@ if (isSkill) {
     { label: 'Commands', items: c.commands.map(x => link('commands', x)) }
   ].filter(g => g.items.length);
   facts = [
-    { k: 'Model', v: c.model }, { k: 'File', v: c.file, href: fileUrl(c.file) },
+    { k: 'Model', v: c.model === 'inherit' ? 'Same as your session (inherit)' : c.model }, { k: 'File', v: c.file, href: fileUrl(c.file) },
     { k: 'Licence', v: 'MIT' }, { k: 'Kit version', v: KIT.version }
   ];
 }
@@ -104,7 +104,7 @@ const metaDesc = description.length > 160 ? description.slice(0, 157).replace(/\
     <div class="d-meta">
       {byline && <span class="byline">{byline}</span>}
       {official && <span class="badge official"><Icon name="check" size={11} stroke={2} />Official</span>}
-      {model && <span class="badge model" title="Model it runs on">model: {model}</span>}
+      {model && <span class="badge model" title={modelTitle(model)}>{model === 'inherit' ? modelLabel(model) : `model: ${model}`}</span>}
       {tags.map(t => <a class="badge tag" href={t.href}>{t.label}</a>)}
     </div>
   </header>
