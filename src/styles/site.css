@@ -73,6 +73,10 @@ code{font-family:var(--mono)}
 .hero-actions{display:flex;gap:12px 20px;align-items:center;margin-top:16px;flex-wrap:wrap}
 .hero-actions .btn{font-family:var(--mono);font-size:13px;font-weight:400;color:var(--color-text);min-height:40px;text-decoration:none}
 .small-muted{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.hero-trust{display:inline-flex;gap:8px;align-items:flex-start;margin-top:14px;font-family:var(--mono);font-size:13px;line-height:1.5;color:var(--muted);text-decoration:none}
+.hero-trust svg{flex:none;margin-top:2px;color:var(--ink-accent)}
+.hero-trust strong{color:var(--color-text);font-weight:500}
+.hero-trust:hover strong{color:var(--ink-accent)}
 .demo-wrap{margin-top:clamp(24px,3vw,36px)}
 
 .inside-list{list-style:none;margin:0;padding:0}
