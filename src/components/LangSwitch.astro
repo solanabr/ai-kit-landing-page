@@ -1,6 +1,7 @@
 ---
 // Locale switcher. `menu` is a native <details> disclosure (works without JS);
-// `list` is the inline footer list. Planned locales are listed, not linked.
+// `list` is the inline footer list. Only live locales are shown; a planned one
+// appears once its `live` flag in LOCALES is turned on.
 // `paths` maps a locale code to this page's URL in that locale; a locale with
 // no entry links to its home page.
 import Icon from './Icon.astro';
@@ -10,7 +11,7 @@ import { UI } from '../lib/i18n';
 interface Props { lang?: Lang; variant?: 'menu' | 'list'; paths?: Partial<Record<string, string>>; up?: boolean }
 const { lang = 'en', variant = 'menu', paths = {}, up = false } = Astro.props;
 const t = UI[lang];
-const items = LOCALES.map(l => ({ ...l, href: paths[l.code] ?? l.path, current: l.code === lang }));
+const items = LOCALES.filter(l => l.live).map(l => ({ ...l, href: paths[l.code] ?? l.path, current: l.code === lang }));
 const currentCode = lang === 'br' ? 'PT-BR' : 'EN';
 ---
 {variant === 'menu' ? (
@@ -23,17 +24,10 @@ const currentCode = lang === 'br' ? 'PT-BR' : 'EN';
     <ul>
       {items.map(l => (
         <li>
-          {l.live ? (
-            <a href={l.href} hreflang={l.hreflang} lang={l.hreflang} aria-current={l.current ? 'true' : undefined}>
-              <span class="l-name"><span class="l-mark" aria-hidden="true">{l.current ? '›' : ''}</span>{l.label}</span>
-              <span class="l-path">{l.path}</span>
-            </a>
-          ) : (
-            <span aria-disabled="true" lang={l.hreflang}>
-              <span class="l-name"><span class="l-mark"></span>{l.label}</span>
-              <span class="l-path">{l.path} · {t.planned}</span>
-            </span>
-          )}
+          <a href={l.href} hreflang={l.hreflang} lang={l.hreflang} aria-current={l.current ? 'true' : undefined}>
+            <span class="l-name"><span class="l-mark" aria-hidden="true">{l.current ? '›' : ''}</span>{l.label}</span>
+            <span class="l-path">{l.path}</span>
+          </a>
         </li>
       ))}
     </ul>
@@ -42,10 +36,8 @@ const currentCode = lang === 'br' ? 'PT-BR' : 'EN';
   <ul class="lang-list" aria-label={t.language}>
     {items.map(l => (
       <li>
-        {l.live
-          ? <a href={l.href} hreflang={l.hreflang} lang={l.hreflang} aria-current={l.current ? 'true' : undefined}>{l.label}</a>
-          : <span class="planned" lang={l.hreflang}>{l.label}</span>}
-        <span class="l-path" title={l.live ? undefined : t.planned}>{l.path}</span>
+        <a href={l.href} hreflang={l.hreflang} lang={l.hreflang} aria-current={l.current ? 'true' : undefined}>{l.label}</a>
+        <span class="l-path">{l.path}</span>
       </li>
     ))}
   </ul>
