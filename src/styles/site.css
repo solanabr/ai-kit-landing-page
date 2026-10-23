@@ -54,6 +54,7 @@ code{font-family:var(--mono)}
 .h1-hero{font-family:var(--font-heading);font-weight:400;font-size:clamp(38px,5.4vw,68px);line-height:.95;letter-spacing:0;margin:0 0 16px;max-width:18ch;text-wrap:balance}
 .h1-page{font-family:var(--font-heading);font-weight:400;font-size:clamp(36px,4.6vw,56px);line-height:1;letter-spacing:0;margin:0}
 .subhead{font-family:var(--mono);font-size:13.5px;line-height:1.45;color:var(--muted);max-width:72ch;margin:0 0 24px;text-wrap:pretty}
+.works{margin:-8px 0 20px;font-family:var(--mono);font-size:13px;color:var(--color-text)}
 .sec-no{font-family:var(--mono);font-size:12px;color:var(--muted);margin:0 0 6px}
 .h2{font-family:var(--font-heading);font-weight:400;font-size:clamp(28px,3.2vw,38px);line-height:1;margin:0}
 .h3{font-family:var(--font-heading);font-weight:400;font-size:28px;margin:0 0 8px}
