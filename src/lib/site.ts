@@ -76,6 +76,27 @@ export const TASKS = [
   { id: 'hackathon', label: { en: 'Ship a hackathon project', br: 'Entregar um projeto de hackathon' }, agent: 'solana-architect', command: 'plan-feature', packs: ['colosseum', 'solana-dev'], prompt: { en: '/plan-feature hackathon MVP: idea check, program, demo app', br: '/plan-feature MVP de hackathon: validar a ideia, programa, app de demo' } }
 ];
 
+// One concrete prompt per agent, shown as its invoke line on cards, pages and
+// Markdown twins. An agent missing here (added to the kit later) falls back to
+// the generic "Use the <id> agent to …".
+export const AGENT_EXAMPLES: Record<string, string> = {
+  'anchor-engineer': 'Use the anchor-engineer agent to add a time-locked withdraw to programs/vault',
+  'defi-engineer': 'Use the defi-engineer agent to swap SOL to USDC through Jupiter at checkout',
+  'devops-engineer': 'Use the devops-engineer agent to set up CI that builds and tests the program on every PR',
+  'game-architect': 'Use the game-architect agent to design on-chain state for a turn-based card game',
+  'mobile-engineer': 'Use the mobile-engineer agent to add Mobile Wallet Adapter sign-in to the Expo app',
+  'pinocchio-engineer': 'Use the pinocchio-engineer agent to port the transfer instruction to Pinocchio and cut its CU',
+  'rust-backend-engineer': 'Use the rust-backend-engineer agent to build an Axum indexer for the program\'s events',
+  'solana-architect': 'Use the solana-architect agent to review the account model and PDAs before we write code',
+  'solana-frontend-engineer': 'Use the solana-frontend-engineer agent to build a wallet-connected deposit page on @solana/kit',
+  'solana-guide': 'Use the solana-guide agent to explain PDAs to an EVM developer',
+  'solana-qa-engineer': 'Use the solana-qa-engineer agent to add LiteSVM tests for every failure path in withdraw',
+  'solana-researcher': 'Use the solana-researcher agent to compare current Solana oracle options, with sources',
+  'tech-docs-writer': 'Use the tech-docs-writer agent to write the integration guide for our program',
+  'token-engineer': 'Use the token-engineer agent to create a Token-2022 mint with a transfer fee and metadata',
+  'unity-engineer': 'Use the unity-engineer agent to connect a wallet and show the player\'s NFTs in Unity'
+};
+
 // Firewall tier behaviour. The kit has no machine-readable tier matrix, so
 // this is transcribed from its README "Firewall tiers" table and
 // docs/firewall.md's gate table, at the rule set named by ruleSetVersion.

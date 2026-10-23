@@ -1,7 +1,7 @@
 // The one data layer every HTML page and every Markdown twin reads, so the two
 // cannot drift: a page and its .md are rendered from the same objects.
 import kit from '../data/kit.json';
-import { ECOSYSTEM, INSTALL_HOST, MCP_ROLES, PACK_NAMES, REPO, SITE, TAGS, TASKS, TIERS, type Kind, type Lang } from './site';
+import { AGENT_EXAMPLES, ECOSYSTEM, INSTALL_HOST, MCP_ROLES, PACK_NAMES, REPO, SITE, TAGS, TASKS, TIERS, type Kind, type Lang } from './site';
 
 export type Pack = (typeof kit.packs)[number];
 export type Agent = (typeof kit.agents)[number];
@@ -53,7 +53,7 @@ export const shortSha = (sha: string | null) => (sha ? sha.slice(0, 7) : null);
 export const packTags = (p: Pack) => TAGS.filter(t => t.match.some(m => p.tags.includes(m))).map(t => t.label);
 
 export const invokeLine = (kind: Kind, id: string) =>
-  kind === 'agents' ? `Use the ${id} agent to …` : kind === 'commands' ? `/${id}` : pack(id)?.install || '';
+  kind === 'agents' ? AGENT_EXAMPLES[id] ?? `Use the ${id} agent to …` : kind === 'commands' ? `/${id}` : pack(id)?.install || '';
 
 // The registry's safety field is one long paragraph. The first sentence is the
 // summary line; the rest is the full review.
