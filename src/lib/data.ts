@@ -49,6 +49,11 @@ export const catalogPath = (kind: Kind) => `/${kind}`;
 export const fileUrl = (file: string) => `${REPO}/blob/v${kit.version}/${file}`;
 export const editUrl = (file: string) => `${REPO}/edit/main/${file}`;
 
+// A file with no `model:` line runs on the session's model ("inherit"). Say so
+// on the page; the Markdown twins keep the raw value.
+export const modelLabel = (m: string) => (m === 'inherit' ? 'session model' : m);
+export const modelTitle = (m: string) => (m === 'inherit' ? "Runs on your session's model (no model: line, so it inherits)" : `Runs on ${m}`);
+
 export const shortSha = (sha: string | null) => (sha ? sha.slice(0, 7) : null);
 
 export const packTags = (p: Pack) => TAGS.filter(t => t.match.some(m => p.tags.includes(m))).map(t => t.label);
