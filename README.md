@@ -56,6 +56,10 @@ Three tables in `src/lib/site.ts` are hand-maintained, because the kit has no ma
 
 Each twin starts with YAML frontmatter whose keys stay stable, so agents can parse them: `id, name, type, maintainer, official, license, source, commit, install, url` for a pack; `id, name, type, model, license, source, invoke, url` for an agent or command. The generator is `src/lib/data.ts`. HTML pages link their twin with `<link rel="alternate" type="text/markdown">`.
 
+## Social preview images
+
+Every page gets a 1200×630 `og:image` at `/og/<path>.png` (`/og/home.png` for `/`), rendered at build by `src/lib/og.ts` with satori and resvg from the same data as the page. `scripts/check-dist.mjs` fails the build when a page's image is missing.
+
 ## Locales
 
 English at `/` and Brazilian Portuguese at `/br` (homepage). Catalog and detail pages are English only for now, since their text comes from the kit. Commands, code, file paths and ids stay in English in every locale. To add a locale, add its strings to `src/lib/i18n.ts`, set `live: true` in `LOCALES` (`src/lib/site.ts`) and add a `src/pages/<code>/` route. hreflang alternates are emitted only for live locales.

@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // Post-build check: every HTML page has its Markdown twin, the twin and the
-// page come from the same item, and the agent indexes exist.
+// page come from the same item, every page's og:image was built, and the
+// agent indexes exist.
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 
@@ -16,6 +17,8 @@ for (const f of pages) {
   if (!existsSync(join(DIST, twin))) fail.push(`${route}: no twin at /${twin}`);
   const html = readFileSync(f, 'utf8');
   if (!html.includes('rel="alternate" type="text/markdown"')) fail.push(`${route}: no text/markdown alternate link`);
+  const og = (html.match(/property="og:image" content="https?:\/\/[^/]+(\/og\/[^"]+\.png)"/) || [])[1];
+  if (!og || !existsSync(join(DIST, og))) fail.push(`${route}: og:image ${og || 'missing'} not built`);
 }
 for (const f of ['llms.txt', 'llms-full.txt', 'index.md']) if (!existsSync(join(DIST, f))) fail.push(`missing /${f}`);
 

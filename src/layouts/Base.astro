@@ -4,6 +4,7 @@ import '../styles/site.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import { SITE, type Lang } from '../lib/site';
+import { ogPath } from '../lib/og';
 
 interface Props {
   title: string;
@@ -18,6 +19,7 @@ interface Props {
 const { title, description, lang = 'en', active = 'home', md, alternates = {} } = Astro.props;
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const canonical = SITE + path;
+const ogImage = SITE + ogPath(Astro.url.pathname.startsWith('/404') ? '/404' : path);
 const hreflang = { en: 'en', br: 'pt-BR' } as const;
 const alts = Object.entries(alternates) as ['en' | 'br', string][];
 const langPaths = Object.fromEntries(alts);
@@ -37,6 +39,15 @@ const langPaths = Object.fromEntries(alts);
   <meta property="og:description" content={description} />
   <meta property="og:url" content={canonical} />
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Solana AI Kit" />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content={title} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
   <meta name="theme-color" content="#0a0d0b" />
   <link rel="icon" type="image/svg+xml" href="/logo.svg" />
   <link rel="preload" href="/fonts/vt323-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
