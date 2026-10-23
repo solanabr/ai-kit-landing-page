@@ -142,7 +142,7 @@ export function itemMarkdown(kind: Kind, id: string) {
   return commandMarkdown(command(id)!);
 }
 
-const summary = `Claude Code, set up to ship on Solana. Open-source (MIT) agents, workflow commands and pinned skill packs from Superteam Brazil. Version ${kit.version}.`;
+const summary = `Your AI coding agent, set up to ship on Solana. For Claude Code, Codex, opencode and any agent that can fetch a URL. Open-source (MIT) agents, workflow commands and pinned skill packs from Superteam Brazil. Version ${kit.version}.`;
 
 export function catalogMarkdown(kind: Kind) {
   const title = { skills: 'Skills', agents: 'Agents', commands: 'Commands' }[kind];
@@ -158,7 +158,7 @@ export function indexMarkdown(lang: Lang = 'en') {
   const br = lang === 'br';
   return [
     ...front({ name: 'Solana AI Kit', type: 'kit', version: kit.version, license: 'MIT', source: REPO, url: SITE + (br ? '/br' : '/') }),
-    br ? '# Claude Code, configurado para entregar na Solana' : '# Claude Code, set up to ship on Solana', '',
+    br ? '# Seu agente de IA, configurado para entregar na Solana' : '# Your AI coding agent, set up to ship on Solana', '',
     br
       ? 'Agentes, comandos de fluxo de trabalho e pacotes de skills fixados, em código aberto e vindos do próprio ecossistema Solana, para cada etapa: da validação da ideia até o lançamento.'
       : 'Open-source agents, workflow commands and pinned skill packs from the Solana ecosystem, for every step from validating the idea to launch.', '',

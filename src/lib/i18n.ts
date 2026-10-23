@@ -9,7 +9,7 @@ export const UI = {
     copy: 'Copy', copied: 'Copied', installMethod: 'Install method',
     starsTitle: 'GitHub stars, read from the GitHub API at build',
     md: { group: 'Markdown version', copy: 'Copy as Markdown', view: 'View .md', claude: 'Open in Claude', gpt: 'Open in ChatGPT', prompt: (u: string) => `Read ${u} and use it for this session` },
-    footer: { tagline: 'Claude Code, set up to ship on Solana.', kit: 'Kit', project: 'Project', agents: 'For agents', licence: 'MIT licence', builtBy: 'Built by Superteam Brazil' },
+    footer: { tagline: 'Your AI coding agent, set up to ship on Solana.', kit: 'Kit', project: 'Project', agents: 'For agents', licence: 'MIT licence', builtBy: 'Built by Superteam Brazil' },
     official: 'Official', facts: 'Facts'
   },
   br: {
@@ -18,7 +18,7 @@ export const UI = {
     copy: 'Copiar', copied: 'Copiado', installMethod: 'Forma de instalação',
     starsTitle: 'Estrelas no GitHub, lidas da API do GitHub no build',
     md: { group: 'Versão em Markdown', copy: 'Copiar como Markdown', view: 'Ver .md', claude: 'Abrir no Claude', gpt: 'Abrir no ChatGPT', prompt: (u: string) => `Leia ${u} e use nesta sessão` },
-    footer: { tagline: 'Claude Code, configurado para entregar na Solana.', kit: 'Kit', project: 'Projeto', agents: 'Para agentes', licence: 'Licença MIT', builtBy: 'Feito pela Superteam Brasil' },
+    footer: { tagline: 'Seu agente de IA, configurado para entregar na Solana.', kit: 'Kit', project: 'Projeto', agents: 'Para agentes', licence: 'Licença MIT', builtBy: 'Feito pela Superteam Brasil' },
     official: 'Oficial', facts: 'Fatos'
   }
 } satisfies Record<Lang, unknown>;
@@ -27,11 +27,12 @@ const code = (s: string) => `<code>${s}</code>`;
 
 export const HOME = {
   en: {
-    title: 'Solana AI Kit · Claude Code, set up to ship on Solana',
+    title: 'Solana AI Kit · Your AI coding agent, set up to ship on Solana',
     description: 'Open-source agents, workflow commands and pinned skill packs that set up Claude Code, Codex and opencode to build on Solana.',
     kicker: (v: string) => `v${v} · MIT · open source · Superteam Brazil`,
-    h1: 'Claude Code, set up to ship on Solana.',
+    h1: 'Your AI coding agent, set up to ship on Solana.',
     sub: 'Open-source agents, workflow commands and pinned skill packs from the Solana ecosystem, for every step from validating the idea to launch.',
+    works: 'Works with Claude Code, Codex, opencode and any agent that can fetch a URL.',
     tabs: ['curl', 'verify first', 'codex / opencode', 'no install'],
     capVerify: 'Download, read, then run.', capAgents: 'Adds configuration for Codex, opencode and other agents.', capNone: 'Paste this into any agent. Nothing is written to your project.',
     nonePrompt: `Read ${INSTALL_HOST}/CLAUDE-solana.md and follow it for this session. We are building on Solana.`,
@@ -62,11 +63,12 @@ export const HOME = {
     ]
   },
   br: {
-    title: 'Solana AI Kit · Claude Code, configurado para entregar na Solana',
+    title: 'Solana AI Kit · Seu agente de IA, configurado para entregar na Solana',
     description: 'Agentes, comandos de fluxo de trabalho e pacotes de skills fixados, em código aberto, que preparam o Claude Code, o Codex e o opencode para construir na Solana.',
     kicker: (v: string) => `v${v} · MIT · código aberto · Superteam Brasil`,
-    h1: 'Claude Code, configurado para entregar na Solana.',
+    h1: 'Seu agente de IA, configurado para entregar na Solana.',
     sub: 'Agentes, comandos de fluxo de trabalho e pacotes de skills fixados, em código aberto e vindos do próprio ecossistema Solana, para cada etapa: da validação da ideia até o lançamento.',
+    works: 'Funciona com Claude Code, Codex, opencode e qualquer agente capaz de buscar uma URL.',
     tabs: ['curl', 'verificar antes', 'codex / opencode', 'sem instalar'],
     capVerify: 'Baixe, leia e depois execute.', capAgents: 'Adiciona a configuração para Codex, opencode e outros agentes.', capNone: 'Cole isto em qualquer agente. Nada é gravado no seu projeto.',
     nonePrompt: `Leia ${INSTALL_HOST}/CLAUDE-solana.md e siga as instruções nesta sessão. Estamos construindo na Solana.`,
