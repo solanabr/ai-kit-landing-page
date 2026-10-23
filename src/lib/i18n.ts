@@ -9,7 +9,7 @@ export const UI = {
     copy: 'Copy', copied: 'Copied', installMethod: 'Install method',
     starsTitle: 'GitHub stars, read from the GitHub API at build',
     md: { group: 'Markdown version', copy: 'Copy as Markdown', view: 'View .md', claude: 'Open in Claude', gpt: 'Open in ChatGPT', prompt: (u: string) => `Read ${u} and use it for this session` },
-    footer: { tagline: 'Your AI coding agent, set up to ship on Solana.', kit: 'Kit', project: 'Project', agents: 'For agents', licence: 'MIT licence', builtBy: 'Built by Superteam Brazil' },
+    footer: { tagline: 'Your AI coding agent, set up to ship on Solana.', kit: 'Kit', project: 'Project', agents: 'For agents', licence: 'MIT licence', builtBy: 'Built by Superteam Brazil', who: ['An open-source project by', 'Superteam Brazil', ', a Solana ecosystem community.'] },
     official: 'Official', facts: 'Facts'
   },
   br: {
@@ -18,7 +18,7 @@ export const UI = {
     copy: 'Copiar', copied: 'Copiado', installMethod: 'Forma de instalação',
     starsTitle: 'Estrelas no GitHub, lidas da API do GitHub no build',
     md: { group: 'Versão em Markdown', copy: 'Copiar como Markdown', view: 'Ver .md', claude: 'Abrir no Claude', gpt: 'Abrir no ChatGPT', prompt: (u: string) => `Leia ${u} e use nesta sessão` },
-    footer: { tagline: 'Seu agente de IA, configurado para entregar na Solana.', kit: 'Kit', project: 'Projeto', agents: 'Para agentes', licence: 'Licença MIT', builtBy: 'Feito pela Superteam Brasil' },
+    footer: { tagline: 'Seu agente de IA, configurado para entregar na Solana.', kit: 'Kit', project: 'Projeto', agents: 'Para agentes', licence: 'Licença MIT', builtBy: 'Feito pela Superteam Brasil', who: ['Um projeto de código aberto da', 'Superteam Brasil', ', uma comunidade do ecossistema Solana.'] },
     official: 'Oficial', facts: 'Fatos'
   }
 } satisfies Record<Lang, unknown>;

@@ -333,7 +333,9 @@ a.badge.tag:hover{border-color:var(--color-accent);color:var(--ink-accent)}
 .footer{border-top:1px solid var(--color-divider);margin-top:clamp(40px,5vw,64px);text-align:left}
 .f-top{max-width:1120px;margin:0 auto;padding:32px clamp(20px,5vw,56px) 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:36px 32px;box-sizing:border-box}
 .f-brand{display:flex;flex-direction:column;gap:10px}
-.f-brand span:last-child{font-size:14px;line-height:1.5;color:var(--muted);max-width:26ch}
+.f-brand > span:nth-child(2),.f-who{font-size:14px;line-height:1.5;color:var(--muted);max-width:26ch}
+.f-who{margin:0;font-size:13px}
+.f-who a{color:var(--ink-accent)}
 .f-col{display:flex;flex-direction:column;gap:10px}
 .f-col h2{margin:0 0 4px}
 .f-col a{font-family:var(--mono);font-size:13px;color:var(--color-text);text-decoration:none;padding:2px 0}
