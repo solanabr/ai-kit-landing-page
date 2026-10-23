@@ -29,6 +29,12 @@ export const MCP_ROLES: Record<string, { name: string; en: string; br: string }>
   'context-mode': { name: 'context-mode', en: 'context compression', br: 'compressão de contexto' }
 };
 
+// Display names that replace a pack's registry name on the site (card, page,
+// Markdown twin, llms.txt). The pack id and the registry stay unchanged.
+export const PACK_NAMES: Record<string, string> = {
+  'get-shit-pretty': 'GSP'
+};
+
 // Catalog filter chips, each matched against a pack's registry tags.
 export const TAGS: { label: string; match: string[] }[] = [
   { label: 'DeFi', match: ['defi', 'swap', 'clmm', 'liquidity', 'dlmm', 'trading', 'stablecoin', 'payments'] },

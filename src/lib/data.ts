@@ -1,14 +1,14 @@
 // The one data layer every HTML page and every Markdown twin reads, so the two
 // cannot drift: a page and its .md are rendered from the same objects.
 import kit from '../data/kit.json';
-import { ECOSYSTEM, INSTALL_HOST, MCP_ROLES, REPO, SITE, TAGS, TASKS, TIERS, type Kind, type Lang } from './site';
+import { ECOSYSTEM, INSTALL_HOST, MCP_ROLES, PACK_NAMES, REPO, SITE, TAGS, TASKS, TIERS, type Kind, type Lang } from './site';
 
 export type Pack = (typeof kit.packs)[number];
 export type Agent = (typeof kit.agents)[number];
 export type Command = (typeof kit.commands)[number];
 
 export const KIT = kit;
-export const packs: Pack[] = kit.packs;
+export const packs: Pack[] = kit.packs.map(p => ({ ...p, name: PACK_NAMES[p.id] ?? p.name }));
 export const agents: Agent[] = kit.agents;
 export const commands: Command[] = kit.commands;
 
