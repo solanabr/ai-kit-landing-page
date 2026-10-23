@@ -23,7 +23,8 @@ export const counts = {
   defaultPacks: packs.filter(p => p.defaultInstalled).length,
   mcp: kit.mcp.length,
   firewallTiers: 4,
-  maintainers: new Set(packs.map(p => p.maintainer).filter(Boolean)).size
+  // Outside maintainers only: solanabr is the kit itself.
+  maintainers: new Set(packs.map(p => p.maintainer).filter(m => m && m !== 'solanabr')).size
 };
 
 // Fail the build when a hand-maintained table points at something the kit no
