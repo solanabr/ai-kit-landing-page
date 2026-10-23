@@ -3,7 +3,7 @@ import LangSwitch from './LangSwitch.astro';
 import Wordmark from './Wordmark.astro';
 import { KIT } from '../lib/data';
 import { UI } from '../lib/i18n';
-import { REPO, type Lang } from '../lib/site';
+import { ORG, REPO, type Lang } from '../lib/site';
 
 interface Props { lang?: Lang; langPaths?: Partial<Record<string, string>> }
 const { lang = 'en', langPaths } = Astro.props;
@@ -25,6 +25,7 @@ const cols = [
     <div class="f-brand">
       <span style="display:flex"><Wordmark height={44} /></span>
       <span>{t.footer.tagline}</span>
+      <p class="f-who">{t.footer.who[0]} <a href={ORG}>{t.footer.who[1]}</a>{t.footer.who[2]}</p>
     </div>
     {cols.map(c => (
       <nav class="f-col" aria-label={c.title}>

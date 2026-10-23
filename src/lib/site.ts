@@ -4,6 +4,7 @@ import kitData from '../data/kit.json';
 
 export const SITE = (import.meta.env.SITE as string | undefined)?.replace(/\/$/, '') || 'https://ai.superteam.codes';
 export const REPO = 'https://github.com/solanabr/ai-kit';
+export const ORG = 'https://github.com/solanabr';
 export const INSTALL_HOST = 'https://aikit.superteam.codes';
 
 export type Lang = 'en' | 'br';
