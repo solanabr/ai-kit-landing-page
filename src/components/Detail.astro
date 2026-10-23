@@ -10,7 +10,7 @@ import InstallBox, { type InstallTab } from './InstallBox.astro';
 import LangSwitch from './LangSwitch.astro';
 import MdControls from './MdControls.astro';
 import {
-  KIT, agent, command, editUrl, fileUrl, itemMarkdown, mdUrl, pack, packTags, pagePath, related, safetyParts, shortSha
+  KIT, agent, command, editUrl, fileUrl, invokeLine, itemMarkdown, mdUrl, pack, packTags, pagePath, related, safetyParts, shortSha
 } from '../lib/data';
 import type { Kind } from '../lib/site';
 
@@ -60,7 +60,7 @@ if (isSkill) {
 } else if (kind === 'agents') {
   const a = agent(id)!;
   title = a.id; byline = 'solanabr/ai-kit · agent'; description = a.description; model = a.model; file = a.file;
-  tabs = [{ label: 'Claude Code', caption: 'Ask for the agent by name, or let a command route to it.', prompt: true, lines: [`Use the ${a.id} agent to …`] }, noInstall];
+  tabs = [{ label: 'Claude Code', caption: 'Ask for the agent by name, or let a command route to it.', prompt: true, lines: [invokeLine('agents', a.id)] }, noInstall];
   does = a.does; handsOff = a.handoffs;
   usedBy = [
     { label: 'Skills', items: a.skills.map(s => link('skills', s)) },
