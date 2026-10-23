@@ -116,7 +116,7 @@ export function agentMarkdown(a: Agent) {
     ...front({ id: a.id, name: a.id, type: 'agent', model: a.model, license: 'MIT', source: fileUrl(a.file), invoke: `ask for the ${a.id} agent`, url }),
     '# ' + a.id, '', a.description, '',
     '## How to invoke', '', F, invokeLine('agents', a.id), F, '',
-    '## What it does', ...list(a.does), '',
+    ...(a.does.length ? ['## Working rules', ...list(a.does), ''] : []),
     '## Hands off to', ...list(a.handoffs.map(h => (h.when ? `${h.to}: ${h.when}` : h.to))), '',
     '## Uses', '- Skills: ' + (a.skills.join(', ') || 'none'), '- Commands: ' + (a.commands.map(c => '/' + c).join(', ') || 'none'),
     ''
